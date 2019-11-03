@@ -3,4 +3,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="away_logo">Away Logo</string>
+    <string name="home_logo">Home Logo</string>
+    <string name="league_logo">League Logo</string>
+    <string name="logo_search">Logo Search</string>
 </resources>
