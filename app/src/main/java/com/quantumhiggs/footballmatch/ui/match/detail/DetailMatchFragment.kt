@@ -1,4 +1,4 @@
-package com.quantumhiggs.footballmatch
+package com.quantumhiggs.footballmatch.ui.match.detail
 
 
 import android.os.Bundle
@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
+import com.quantumhiggs.footballmatch.R
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -17,15 +19,20 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
-class DetailLeagueFragmant : Fragment() {
+class DetailMatchFragment : Fragment() {
+
+    private lateinit var viewModel: DetailMatchViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail_league_fragmant, container, false)
+        return inflater.inflate(R.layout.fragment_detail_match, container, false)
     }
 
-
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(this).get(DetailMatchViewModel::class.java)
+    }
 }

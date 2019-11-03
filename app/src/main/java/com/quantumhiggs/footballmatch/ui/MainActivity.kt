@@ -1,7 +1,8 @@
-package com.quantumhiggs.footballmatch
+package com.quantumhiggs.footballmatch.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.quantumhiggs.footballmatch.R
 
 class MainActivity : AppCompatActivity() {
 
