@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.quantumhiggs.footballmatch.R
+import com.quantumhiggs.footballmatch.model.League
+import kotlinx.android.synthetic.main.fragment_detail_league_fragment.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -23,6 +26,10 @@ class DetailLeagueFragmant : Fragment() {
 
     private lateinit var viewModel: DetailLeagueViewModel
 
+    companion object {
+        fun newInstance() = DetailLeagueFragmant()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,5 +41,15 @@ class DetailLeagueFragmant : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(DetailLeagueViewModel::class.java)
+
+        viewModel.setDetailLeague().observe(this, Observer { t ->
+            t.leagues.let { showData(it) }
+        })
+    }
+
+    fun showData(data: List<League>) {
+
+        desc_detail_league.text = data.get(0).strDescriptionEN
+
     }
 }
