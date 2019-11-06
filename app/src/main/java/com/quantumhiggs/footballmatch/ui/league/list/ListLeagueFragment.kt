@@ -13,12 +13,6 @@ import com.quantumhiggs.footballmatch.R
 import com.quantumhiggs.footballmatch.model.League
 import kotlinx.android.synthetic.main.fragment_list_league.*
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class ListLeagueFragment : Fragment() {
 
     private lateinit var viewModel: ListLeagueViewModel

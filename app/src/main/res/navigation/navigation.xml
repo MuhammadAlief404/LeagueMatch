@@ -12,16 +12,23 @@
                 app:destination="@id/detailLeagueFragmant" app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim" app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
-        <action android:id="@+id/action_league_match"
-                app:destination="@id/leagueMatchFragment" app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim" app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-                app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
     <fragment
             android:id="@+id/detailLeagueFragmant"
             android:name="com.quantumhiggs.footballmatch.ui.league.detail.DetailLeagueFragmant"
             android:label="fragment_detail_league_fragmant"
-            tools:layout="@layout/fragment_detail_league_fragment"/>
+            tools:layout="@layout/fragment_detail_league_fragment">
+        <argument
+                android:name="leagueId"
+                app:argType="string"/>
+        <action
+                android:id="@+id/action_league_match"
+                app:destination="@id/leagueMatchFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+    </fragment>
     <fragment
             android:id="@+id/leagueMatchFragment"
             android:name="com.quantumhiggs.footballmatch.ui.match.LeagueMatchFragment"
@@ -30,6 +37,9 @@
                 app:destination="@id/detailMatchFragment" app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim" app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <argument
+                android:name="leagueId"
+                app:argType="string"/>
     </fragment>
     <fragment
             android:id="@+id/detailMatchFragment"

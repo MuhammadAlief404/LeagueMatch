@@ -7,4 +7,6 @@
     <string name="home_logo">Home Logo</string>
     <string name="league_logo">League Logo</string>
     <string name="logo_search">Logo Search</string>
+    <string name="prev_match">Prev Match</string>
+    <string name="next_match">Next Match</string>
 </resources>

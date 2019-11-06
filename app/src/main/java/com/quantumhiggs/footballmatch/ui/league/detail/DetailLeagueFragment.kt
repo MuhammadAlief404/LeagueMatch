@@ -8,12 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.quantumhiggs.footballmatch.R
 import com.quantumhiggs.footballmatch.model.League
 import kotlinx.android.synthetic.main.fragment_detail_league_fragment.*
 
 
-// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -25,6 +27,8 @@ private const val ARG_PARAM2 = "param2"
 class DetailLeagueFragmant : Fragment() {
 
     private lateinit var viewModel: DetailLeagueViewModel
+
+//    val args: ConfirmationFragmentArgs by navArgs()
 
     companion object {
         fun newInstance() = DetailLeagueFragmant()
@@ -40,16 +44,29 @@ class DetailLeagueFragmant : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(DetailLeagueViewModel::class.java)
 
+        val args by navArgs<DetailLeagueFragmantArgs>()
+        DetailLeagueViewModel.leaugeId = args.leagueId
+        viewModel = ViewModelProviders.of(this).get(DetailLeagueViewModel::class.java)
         viewModel.setDetailLeague().observe(this, Observer { t ->
             t.leagues.let { showData(it) }
         })
+
+        fab_detail_league.setOnClickListener {
+            val direction = DetailLeagueFragmantDirections.actionLeagueMatch(DetailLeagueViewModel.leaugeId)
+            it.findNavController().navigate(direction)
+        }
     }
 
-    fun showData(data: List<League>) {
+    fun showData(datas: List<League>) {
 
-        desc_detail_league.text = data.get(0).strDescriptionEN
+        val data = datas.get(0)
+
+        desc_detail_league.text = data.strDescriptionEN
+        Glide.with(this)
+            .load(data.strTrophy)
+            .placeholder(R.drawable.ic_trophy)
+            .into(img_detail_league)
 
     }
 }

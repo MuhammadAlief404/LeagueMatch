@@ -13,9 +13,8 @@ import kotlinx.android.synthetic.main.item_list_league.view.*
 class ListLeagueAdapter(val league: List<League>) :
     RecyclerView.Adapter<ListLeagueAdapter.ViewHoler>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHoler {
-        return ViewHoler(LayoutInflater.from(parent.context).inflate(R.layout.item_list_league, parent, false))
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHoler =
+        ViewHoler(LayoutInflater.from(parent.context).inflate(R.layout.item_list_league, parent, false))
 
     override fun getItemCount(): Int = league.size
 
@@ -31,7 +30,8 @@ class ListLeagueAdapter(val league: List<League>) :
                 .into(itemView.item_list_league_image)
 
             itemView.setOnClickListener {
-                it.findNavController().navigate(R.id.action_detail_league)
+                val direction = ListLeagueFragmentDirections.actionDetailLeague(items.idLeague)
+                it.findNavController().navigate(direction)
             }
         }
     }
