@@ -1,7 +1,8 @@
 package com.quantumhiggs.footballmatch.model
 
 data class Sports(
-    val events: List<Event>
+    var events: List<Event>,
+    var event: List<Event>
 )
 
 data class Event(
@@ -12,9 +13,9 @@ data class Event(
     val idHomeTeam: String,
     val idLeague: String,
     val idSoccerXML: String,
-    val intAwayScore: String,
+    val intAwayScore: String?,
     val intAwayShots: String,
-    val intHomeScore: String,
+    val intHomeScore: String?,
     val intHomeShots: String,
     val intRound: String,
     val intSpectators: String,

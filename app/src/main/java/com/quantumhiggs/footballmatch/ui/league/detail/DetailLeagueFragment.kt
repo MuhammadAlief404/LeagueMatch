@@ -16,51 +16,43 @@ import com.quantumhiggs.footballmatch.model.League
 import kotlinx.android.synthetic.main.fragment_detail_league_fragment.*
 
 
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- *
- */
-class DetailLeagueFragmant : Fragment() {
+class DetailLeagueFragment : Fragment() {
 
     private lateinit var viewModel: DetailLeagueViewModel
-
-//    val args: ConfirmationFragmentArgs by navArgs()
+    private lateinit var fanArt: String
 
     companion object {
-        fun newInstance() = DetailLeagueFragmant()
+        fun newInstance() = DetailLeagueFragment()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_detail_league_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val args by navArgs<DetailLeagueFragmantArgs>()
+        val args by navArgs<DetailLeagueFragmentArgs>()
         DetailLeagueViewModel.leaugeId = args.leagueId
         viewModel = ViewModelProviders.of(this).get(DetailLeagueViewModel::class.java)
         viewModel.setDetailLeague().observe(this, Observer { t ->
-            t.leagues.let { showData(it) }
+            showData(t.leagues)
         })
 
         fab_detail_league.setOnClickListener {
-            val direction = DetailLeagueFragmantDirections.actionLeagueMatch(DetailLeagueViewModel.leaugeId)
+            val direction = DetailLeagueFragmentDirections.actionLeagueMatch(DetailLeagueViewModel.leaugeId, fanArt)
             it.findNavController().navigate(direction)
         }
     }
 
-    fun showData(datas: List<League>) {
+    private fun showData(datas: List<League>) {
 
         val data = datas.get(0)
+
+        fanArt = data.strFanart1
 
         desc_detail_league.text = data.strDescriptionEN
         Glide.with(this)

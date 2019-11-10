@@ -11,16 +11,16 @@ import com.quantumhiggs.footballmatch.model.League
 import kotlinx.android.synthetic.main.item_list_league.view.*
 
 class ListLeagueAdapter(val league: List<League>) :
-    RecyclerView.Adapter<ListLeagueAdapter.ViewHoler>() {
+    RecyclerView.Adapter<ListLeagueAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHoler =
-        ViewHoler(LayoutInflater.from(parent.context).inflate(R.layout.item_list_league, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
+        ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_league, parent, false))
 
     override fun getItemCount(): Int = league.size
 
-    override fun onBindViewHolder(holder: ViewHoler, position: Int) = holder.bindItems(league[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bindItems(league[position])
 
-    class ViewHoler(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindItems(items: League) {
             itemView.item_list_league_name.text = items.strLeague
 

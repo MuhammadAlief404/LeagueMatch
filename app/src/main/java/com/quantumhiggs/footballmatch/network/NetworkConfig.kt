@@ -9,9 +9,9 @@ import java.util.concurrent.TimeUnit
 
 class NetworkConfig {
 
-    val BASE_URL = BuildConfig.BASE_URL
+    private val BASE_URL = BuildConfig.BASE_URL
 
-    fun getInterceptor(): OkHttpClient {
+    private fun getInterceptor(): OkHttpClient {
 
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -25,7 +25,7 @@ class NetworkConfig {
         return okhttp
     }
 
-    fun getNetwork(): Retrofit {
+    private fun getNetwork(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(getInterceptor())

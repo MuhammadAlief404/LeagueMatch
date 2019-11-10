@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/navigation"
             app:startDestination="@id/listLeagueFragment">
 
     <fragment
             android:id="@+id/listLeagueFragment"
             android:name="com.quantumhiggs.footballmatch.ui.league.list.ListLeagueFragment"
-            android:label="fragment_list_league" tools:layout="@layout/fragment_list_league">
-        <action android:id="@+id/action_detail_league"
-                app:destination="@id/detailLeagueFragmant" app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim" app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            android:label="fragment_list_league"
+            tools:layout="@layout/fragment_list_league">
+        <action
+                android:id="@+id/action_detail_league"
+                app:destination="@id/detailLeagueFragmant"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
     <fragment
             android:id="@+id/detailLeagueFragmant"
-            android:name="com.quantumhiggs.footballmatch.ui.league.detail.DetailLeagueFragmant"
+            android:name="com.quantumhiggs.footballmatch.ui.league.detail.DetailLeagueFragment"
             android:label="fragment_detail_league_fragmant"
             tools:layout="@layout/fragment_detail_league_fragment">
         <argument
@@ -28,21 +33,56 @@
                 app:exitAnim="@anim/nav_default_exit_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action
+                android:id="@+id/action_detailLeagueFragmant_to_leagueMatchFragment"
+                app:destination="@id/leagueMatchFragment"/>
     </fragment>
     <fragment
             android:id="@+id/leagueMatchFragment"
             android:name="com.quantumhiggs.footballmatch.ui.match.LeagueMatchFragment"
-              android:label="fragment_league_match" tools:layout="@layout/fragment_league_match">
-        <action android:id="@+id/action_detail_match"
-                app:destination="@id/detailMatchFragment" app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim" app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            android:label="fragment_league_match"
+            tools:layout="@layout/fragment_league_match">
+        <action
+                android:id="@+id/action_detail_match"
+                app:destination="@id/detailMatchFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <argument
                 android:name="leagueId"
                 app:argType="string"/>
+        <argument
+                android:name="fanArt"
+                app:argType="string"/>
+        <action
+                android:id="@+id/action_search_match"
+                app:destination="@id/searchMatchFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
     <fragment
             android:id="@+id/detailMatchFragment"
             android:name="com.quantumhiggs.footballmatch.ui.match.detail.DetailMatchFragment"
-            android:label="fragment_detail_match" tools:layout="@layout/fragment_detail_match"/>
+            android:label="fragment_detail_match"
+            tools:layout="@layout/fragment_detail_match">
+        <argument
+                android:name="matchId"
+                app:argType="string"/>
+    </fragment>
+    <fragment
+            android:id="@+id/searchMatchFragment"
+            android:name="com.quantumhiggs.footballmatch.ui.match.search.SearchMatchFragment"
+            android:label="fragment_search_match"
+            tools:layout="@layout/fragment_search_match">
+        <action
+                android:id="@+id/action_searchMatchFragment_to_detailMatchFragment"
+                app:destination="@id/detailMatchFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+    </fragment>
 </navigation>

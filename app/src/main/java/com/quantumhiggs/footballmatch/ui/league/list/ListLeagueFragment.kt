@@ -26,7 +26,6 @@ class ListLeagueFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_list_league, container, false)
     }
 
@@ -37,7 +36,7 @@ class ListLeagueFragment : Fragment() {
         rv_list_league.layoutManager = GridLayoutManager(context, 2)
 
         viewModel.setListLeague().observe(this, Observer { t ->
-            t.leagues.let { showData(it) }
+            showData(t.leagues)
         })
     }
 

@@ -1,4 +1,4 @@
-package com.quantumhiggs.footballmatch.ui.match.detail
+package com.quantumhiggs.footballmatch.ui.match.search
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,38 +8,36 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailMatchViewModel : ViewModel() {
+class SearchMatchViewModel(var matchName: String = "English") : ViewModel() {
 
-    private var detailMatch = MutableLiveData<Sports>()
-
-    companion object {
-        var matchId: String = "1"
-    }
+    private var listMatch = MutableLiveData<Sports>()
 
     init {
-        getDetailMatch(matchId)
+        getListMatch(matchName)
     }
 
-    private fun getDetailMatch(matchId: String) {
+    private fun getListMatch(matchName: String) {
         NetworkConfig()
             .api()
-            .getDetailMatch(matchId)
+            .getSearchMatch(matchName)
             .enqueue(object : Callback<Sports> {
                 override fun onFailure(call: Call<Sports>, t: Throwable) {
-                    detailMatch.value = null
+                    listMatch.value = null
                 }
 
                 override fun onResponse(call: Call<Sports>, response: Response<Sports>) {
                     if (response.isSuccessful) {
-                        detailMatch.value = response.body()
+                        listMatch.value = response.body()
                     } else {
-                        detailMatch.value = null
+                        listMatch.value = null
                     }
                 }
             })
     }
 
-    fun setDetailMatch(): MutableLiveData<Sports> {
-        return detailMatch
+    fun setListMatch(): MutableLiveData<Sports> {
+        getListMatch(matchName)
+        return listMatch
     }
+
 }

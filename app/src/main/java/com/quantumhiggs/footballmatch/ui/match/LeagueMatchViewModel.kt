@@ -44,7 +44,7 @@ class LeagueMatchViewModel : ViewModel() {
     private fun getListNextMatch(leaugeId: String) {
         NetworkConfig()
             .api()
-            .getPrevLeague(leaugeId)
+            .getNextLeague(leaugeId)
             .enqueue(object : Callback<Sports> {
                 override fun onFailure(call: Call<Sports>, t: Throwable) {
                     listNextMatch.value = null

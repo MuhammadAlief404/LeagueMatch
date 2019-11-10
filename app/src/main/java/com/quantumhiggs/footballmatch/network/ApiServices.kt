@@ -20,4 +20,10 @@ interface ApiServices {
     @GET("eventspastleague.php?")
     fun getPrevLeague(@Query("id") id: String): Call<Sports>
 
+    @GET("lookupevent.php?")
+    fun getDetailMatch(@Query("id") id: String): Call<Sports>
+
+    @GET("searchevents.php?")
+    fun getSearchMatch(@Query("e") name: String): Call<Sports>
+
 }
