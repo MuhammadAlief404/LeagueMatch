@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.quantumhiggs.footballmatch.R
 import com.quantumhiggs.footballmatch.model.Event
+import com.quantumhiggs.footballmatch.model.Team
 import com.quantumhiggs.footballmatch.utils.CommonFunction.checkNullOrEmpty
 import kotlinx.android.synthetic.main.fragment_detail_match.*
 
@@ -61,6 +63,40 @@ class DetailMatchFragment : Fragment() {
         home_shoots_detail_match.text = checkNullOrEmpty(data.intHomeShots)
         home_goald_detail_match.text = checkNullOrEmpty(data.strHomeGoalDetails)
 
+        if (!datas.isNullOrEmpty()) {
+            viewModel.setHomeDetail().observe(this, Observer { t ->
+                showHome(t.teams)
+            })
+
+            viewModel.setAwayDetail().observe(this, Observer { t ->
+                showAway(t.teams)
+            })
+        }
+
+    }
+
+    private fun showHome(datas: List<Team>) {
+        Glide.with(this)
+            .load(datas[0].strTeamLogo)
+            .placeholder(R.drawable.ic_trophy)
+            .into(home_image_card_detail_match)
+
+        Glide.with(this)
+            .load(datas[0].strTeamLogo)
+            .placeholder(R.drawable.ic_trophy)
+            .into(home_image_detail_match)
+    }
+
+    private fun showAway(datas: List<Team>) {
+        Glide.with(this)
+            .load(datas[0].strTeamLogo)
+            .placeholder(R.drawable.ic_trophy)
+            .into(away_image_card_detail_match)
+
+        Glide.with(this)
+            .load(datas[0].strTeamLogo)
+            .placeholder(R.drawable.ic_trophy)
+            .into(away_image_detail_match)
     }
 
 }

@@ -2,6 +2,7 @@ package com.quantumhiggs.footballmatch.network
 
 import com.quantumhiggs.footballmatch.model.Leagues
 import com.quantumhiggs.footballmatch.model.Sports
+import com.quantumhiggs.footballmatch.model.Teams
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -25,5 +26,8 @@ interface ApiServices {
 
     @GET("searchevents.php?")
     fun getSearchMatch(@Query("e") name: String): Call<Sports>
+
+    @GET("lookupteam.php?")
+    fun getTeamDetail(@Query("id") id: String): Call<Teams>
 
 }
