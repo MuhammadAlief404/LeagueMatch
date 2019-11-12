@@ -16,4 +16,6 @@
     <string name="score">Score</string>
     <string name="ft">FT</string>
     <string name="match_name">Match Name</string>
+    <string name="add_to_favorite">Add to Favorite</string>
+    <string name="favorite_match">Favorite Match</string>
 </resources>

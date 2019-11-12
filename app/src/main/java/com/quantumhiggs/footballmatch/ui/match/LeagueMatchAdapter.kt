@@ -10,16 +10,24 @@ import com.quantumhiggs.footballmatch.model.Event
 import com.quantumhiggs.footballmatch.utils.CommonFunction.checkNullOrEmpty
 import kotlinx.android.synthetic.main.item_list_match.view.*
 
-class LeagueMatchAdapter(private val sports: List<Event>) : RecyclerView.Adapter<LeagueMatchAdapter.ViewHoler>() {
+class LeagueMatchAdapter(private val sports: List<Event>) :
+    RecyclerView.Adapter<LeagueMatchAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHoler =
-        ViewHoler(LayoutInflater.from(parent.context).inflate(R.layout.item_list_match, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
+        ViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.item_list_match,
+                parent,
+                false
+            )
+        )
 
     override fun getItemCount(): Int = sports.size
 
-    override fun onBindViewHolder(holder: ViewHoler, position: Int) = holder.bindItems(sports.get(position))
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) =
+        holder.bindItems(sports.get(position))
 
-    class ViewHoler(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindItems(sport: Event) {
             itemView.item_list_match_title.text = checkNullOrEmpty(sport.strEvent)
