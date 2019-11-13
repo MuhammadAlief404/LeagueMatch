@@ -1,6 +1,7 @@
 package com.quantumhiggs.footballmatch.ui.match.detail
 
 
+import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +12,16 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.quantumhiggs.footballmatch.R
+import com.quantumhiggs.footballmatch.db.Favorites
+import com.quantumhiggs.footballmatch.db.database
 import com.quantumhiggs.footballmatch.model.Event
 import com.quantumhiggs.footballmatch.model.Team
 import com.quantumhiggs.footballmatch.utils.CommonFunction.checkNullOrEmpty
 import kotlinx.android.synthetic.main.fragment_detail_match.*
+import org.jetbrains.anko.db.classParser
+import org.jetbrains.anko.db.insert
+import org.jetbrains.anko.db.select
+import org.jetbrains.anko.support.v4.toast
 
 class DetailMatchFragment : Fragment() {
 
@@ -48,7 +55,8 @@ class DetailMatchFragment : Fragment() {
 
         home_card_detail_match.text = checkNullOrEmpty(data.strHomeTeam)
         away_card_detail_match.text = checkNullOrEmpty(data.strAwayTeam)
-        score_card_detail_match.text = checkNullOrEmpty(data.intHomeScore) + " : " + checkNullOrEmpty(data.intAwayScore)
+        score_card_detail_match.text =
+            checkNullOrEmpty(data.intHomeScore) + " : " + checkNullOrEmpty(data.intAwayScore)
 
         away_detail_match.text = checkNullOrEmpty(data.strAwayTeam)
         away_score_detail_match.text = checkNullOrEmpty(data.intAwayScore)
@@ -71,6 +79,16 @@ class DetailMatchFragment : Fragment() {
             viewModel.setAwayDetail().observe(this, Observer { t ->
                 showAway(t.teams)
             })
+        }
+
+        if (isFavorited(data)) {
+            btn_favorite_detail_match.visibility = View.INVISIBLE
+        } else {
+            btn_favorite_detail_match.visibility = View.VISIBLE
+        }
+
+        btn_favorite_detail_match.setOnClickListener {
+            addToFavorite(data)
         }
 
     }
@@ -99,4 +117,40 @@ class DetailMatchFragment : Fragment() {
             .into(away_image_detail_match)
     }
 
+    private fun addToFavorite(data: Event) {
+        try {
+            context?.database?.use {
+                insert(
+                    Favorites.TABLE_FAVORITE,
+                    Favorites.EVENT_ID to data.idEvent,
+                    Favorites.EVENT_NAME to data.strEvent,
+                    Favorites.DATE_EVENT to data.dateEvent,
+                    Favorites.HOME_NAME to data.strHomeTeam,
+                    Favorites.AWAY_NAME to data.strAwayTeam,
+                    Favorites.HOME_SCORE to data.intHomeScore,
+                    Favorites.AWAY_SCORE to data.intAwayScore
+                )
+                toast("Match Added to Favorite")
+            }
+        } catch (e: SQLiteConstraintException) {
+            toast(e.localizedMessage)
+        }
+        btn_favorite_detail_match.visibility = View.VISIBLE
+    }
+
+    private fun isFavorited(event: Event): Boolean {
+        var temp = false
+        context?.database?.use {
+            val result = select(Favorites.TABLE_FAVORITE)
+                .whereArgs(
+                    "(EVENT_ID = {id})",
+                    "id" to event.idEvent
+                )
+            val favorite = result.parseList(classParser<Favorites>())
+            if (favorite.isNotEmpty()) {
+                temp = true
+            }
+        }
+        return temp
+    }
 }

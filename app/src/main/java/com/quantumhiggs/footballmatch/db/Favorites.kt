@@ -1,7 +1,7 @@
 package com.quantumhiggs.footballmatch.db
 
 data class Favorites(
-    val id: Double?,
+    val id: Long?,
     val eventId: String?,
     val eventName: String?,
     val dateEvent: String?,

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.quantumhiggs.footballmatch.R
 import com.quantumhiggs.footballmatch.model.League
@@ -38,6 +39,11 @@ class ListLeagueFragment : Fragment() {
         viewModel.setListLeague().observe(this, Observer { t ->
             showData(t.leagues)
         })
+
+        fab_favorite_list_league.setOnClickListener {
+            val direction = ListLeagueFragmentDirections.actionFavoriteMatch()
+            it.findNavController().navigate(direction)
+        }
     }
 
     private fun showData(data: List<League>) {
