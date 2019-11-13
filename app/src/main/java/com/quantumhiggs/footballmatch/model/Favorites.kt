@@ -1,4 +1,4 @@
-package com.quantumhiggs.footballmatch.db
+package com.quantumhiggs.footballmatch.model
 
 data class Favorites(
     val id: Long?,

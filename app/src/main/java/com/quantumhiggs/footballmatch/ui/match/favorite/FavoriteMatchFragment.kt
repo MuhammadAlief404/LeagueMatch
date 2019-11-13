@@ -6,15 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.quantumhiggs.footballmatch.R
+import com.quantumhiggs.footballmatch.db.database
+import com.quantumhiggs.footballmatch.model.Favorites
+import kotlinx.android.synthetic.main.fragment_favorite_match.*
+import org.jetbrains.anko.db.SelectQueryBuilder
+import org.jetbrains.anko.db.classParser
+import org.jetbrains.anko.db.select
 
-/**
- * A simple [Fragment] subclass.
- */
 class FavoriteMatchFragment : Fragment() {
 
-    private lateinit var viewModel: FavoriteMatchViewModel
+    private lateinit var result: SelectQueryBuilder
+    private lateinit var favorite: List<Favorites>
+
+    companion object {
+        fun newInstance() = FavoriteMatchFragment()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,6 +35,16 @@ class FavoriteMatchFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this).get(FavoriteMatchViewModel::class.java)
+        rv_list_favorite.layoutManager = LinearLayoutManager(context)
+
+        context?.database?.use {
+            result = select(Favorites.TABLE_FAVORITE)
+            favorite = result.parseList(classParser())
+            showData(favorite)
+        }
+    }
+
+    private fun showData(data: List<Favorites>) {
+        rv_list_favorite.adapter = FavoriteMatchAdapter(data)
     }
 }

@@ -2,6 +2,7 @@ package com.quantumhiggs.footballmatch.db
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import com.quantumhiggs.footballmatch.model.Favorites
 import org.jetbrains.anko.db.*
 
 class DatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "FavoriteMatch.db", null, 1) {

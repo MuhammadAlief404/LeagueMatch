@@ -12,9 +12,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.quantumhiggs.footballmatch.R
-import com.quantumhiggs.footballmatch.db.Favorites
 import com.quantumhiggs.footballmatch.db.database
 import com.quantumhiggs.footballmatch.model.Event
+import com.quantumhiggs.footballmatch.model.Favorites
 import com.quantumhiggs.footballmatch.model.Team
 import com.quantumhiggs.footballmatch.utils.CommonFunction.checkNullOrEmpty
 import kotlinx.android.synthetic.main.fragment_detail_match.*
@@ -135,7 +135,7 @@ class DetailMatchFragment : Fragment() {
         } catch (e: SQLiteConstraintException) {
             toast(e.localizedMessage)
         }
-        btn_favorite_detail_match.visibility = View.VISIBLE
+        btn_favorite_detail_match.visibility = View.INVISIBLE
     }
 
     private fun isFavorited(event: Event): Boolean {
