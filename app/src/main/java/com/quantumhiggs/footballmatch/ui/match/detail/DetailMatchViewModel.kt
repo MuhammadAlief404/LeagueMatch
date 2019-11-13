@@ -1,6 +1,5 @@
 package com.quantumhiggs.footballmatch.ui.match.detail
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.quantumhiggs.footballmatch.model.Sports
@@ -52,17 +51,13 @@ class DetailMatchViewModel : ViewModel() {
             .enqueue(object : Callback<Teams> {
                 override fun onFailure(call: Call<Teams>, t: Throwable) {
                     homeDetail.value = null
-                    Log.d("lololol", t.localizedMessage)
                 }
 
                 override fun onResponse(call: Call<Teams>, response: Response<Teams>) {
                     if (response.isSuccessful) {
-//                        response.body()?.let { teamDetail.value?.add(it) }
                         homeDetail.value = response.body()
-                        Log.d("lolol", response.body().toString())
                     } else {
                         homeDetail.value = null
-                        Log.d("lol", response.body().toString())
                     }
                 }
             })
@@ -75,17 +70,13 @@ class DetailMatchViewModel : ViewModel() {
             .enqueue(object : Callback<Teams> {
                 override fun onFailure(call: Call<Teams>, t: Throwable) {
                     awayDetail.value = null
-                    Log.d("lololol", t.localizedMessage)
                 }
 
                 override fun onResponse(call: Call<Teams>, response: Response<Teams>) {
                     if (response.isSuccessful) {
-//                        response.body()?.let { teamDetail.value?.add(it) }
                         awayDetail.value = response.body()
-                        Log.d("lolol", response.body().toString())
                     } else {
                         awayDetail.value = null
-                        Log.d("lol", response.body().toString())
                     }
                 }
             })

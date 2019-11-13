@@ -127,7 +127,7 @@ class DetailMatchFragment : Fragment() {
                     )
                 }
                 toast("Match Removed from Favorite")
-
+                favoriteCheck(data)
             } catch (e: SQLiteConstraintException) {
                 toast(e.localizedMessage)
             }
@@ -145,6 +145,7 @@ class DetailMatchFragment : Fragment() {
                         Favorites.AWAY_SCORE to data.intAwayScore
                     )
                     toast("Match Added to Favorite")
+                    favoriteCheck(data)
                 }
             } catch (e: SQLiteConstraintException) {
                 toast(e.localizedMessage)

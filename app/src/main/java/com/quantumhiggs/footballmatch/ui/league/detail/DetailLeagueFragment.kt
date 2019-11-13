@@ -43,14 +43,17 @@ class DetailLeagueFragment : Fragment() {
         })
 
         fab_detail_league.setOnClickListener {
-            val direction = DetailLeagueFragmentDirections.actionLeagueMatch(DetailLeagueViewModel.leaugeId, fanArt)
+            val direction = DetailLeagueFragmentDirections.actionLeagueMatch(
+                DetailLeagueViewModel.leaugeId,
+                fanArt
+            )
             it.findNavController().navigate(direction)
         }
     }
 
     private fun showData(datas: List<League>) {
 
-        val data = datas.get(0)
+        val data = datas[0]
 
         fanArt = data.strFanart1
 

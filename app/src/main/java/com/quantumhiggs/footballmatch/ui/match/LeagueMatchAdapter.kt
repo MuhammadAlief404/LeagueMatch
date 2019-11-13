@@ -25,7 +25,7 @@ class LeagueMatchAdapter(private val sports: List<Event>) :
     override fun getItemCount(): Int = sports.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
-        holder.bindItems(sports.get(position))
+        holder.bindItems(sports[position])
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
