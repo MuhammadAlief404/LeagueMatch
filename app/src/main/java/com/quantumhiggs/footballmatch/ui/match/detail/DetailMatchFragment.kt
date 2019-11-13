@@ -19,6 +19,7 @@ import com.quantumhiggs.footballmatch.model.Team
 import com.quantumhiggs.footballmatch.utils.CommonFunction.checkNullOrEmpty
 import kotlinx.android.synthetic.main.fragment_detail_match.*
 import org.jetbrains.anko.db.classParser
+import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
 import org.jetbrains.anko.support.v4.toast
@@ -26,6 +27,7 @@ import org.jetbrains.anko.support.v4.toast
 class DetailMatchFragment : Fragment() {
 
     private lateinit var viewModel: DetailMatchViewModel
+    private var isFavorite = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -81,14 +83,10 @@ class DetailMatchFragment : Fragment() {
             })
         }
 
-        if (isFavorited(data)) {
-            btn_favorite_detail_match.visibility = View.INVISIBLE
-        } else {
-            btn_favorite_detail_match.visibility = View.VISIBLE
-        }
+        favoriteCheck(data)
 
         btn_favorite_detail_match.setOnClickListener {
-            addToFavorite(data)
+            favoriteControl(data)
         }
 
     }
@@ -117,25 +115,52 @@ class DetailMatchFragment : Fragment() {
             .into(away_image_detail_match)
     }
 
-    private fun addToFavorite(data: Event) {
-        try {
-            context?.database?.use {
-                insert(
-                    Favorites.TABLE_FAVORITE,
-                    Favorites.EVENT_ID to data.idEvent,
-                    Favorites.EVENT_NAME to data.strEvent,
-                    Favorites.DATE_EVENT to data.dateEvent,
-                    Favorites.HOME_NAME to data.strHomeTeam,
-                    Favorites.AWAY_NAME to data.strAwayTeam,
-                    Favorites.HOME_SCORE to data.intHomeScore,
-                    Favorites.AWAY_SCORE to data.intAwayScore
-                )
-                toast("Match Added to Favorite")
+
+    private fun favoriteControl(data: Event) {
+        favoriteCheck(data)
+        if (isFavorited(data)) {
+            try {
+                context?.database?.use {
+                    delete(
+                        Favorites.TABLE_FAVORITE, "(EVENT_ID = {id})",
+                        "id" to data.idEvent
+                    )
+                }
+                toast("Match Removed from Favorite")
+
+            } catch (e: SQLiteConstraintException) {
+                toast(e.localizedMessage)
             }
-        } catch (e: SQLiteConstraintException) {
-            toast(e.localizedMessage)
+        } else {
+            try {
+                context?.database?.use {
+                    insert(
+                        Favorites.TABLE_FAVORITE,
+                        Favorites.EVENT_ID to data.idEvent,
+                        Favorites.EVENT_NAME to data.strEvent,
+                        Favorites.DATE_EVENT to data.dateEvent,
+                        Favorites.HOME_NAME to data.strHomeTeam,
+                        Favorites.AWAY_NAME to data.strAwayTeam,
+                        Favorites.HOME_SCORE to data.intHomeScore,
+                        Favorites.AWAY_SCORE to data.intAwayScore
+                    )
+                    toast("Match Added to Favorite")
+                }
+            } catch (e: SQLiteConstraintException) {
+                toast(e.localizedMessage)
+            }
+            btn_favorite_detail_match.text = getString(R.string.remove_from_favorite)
         }
-        btn_favorite_detail_match.visibility = View.INVISIBLE
+    }
+
+    private fun favoriteCheck(data: Event) {
+        if (isFavorited(data)) {
+            btn_favorite_detail_match.text = getString(R.string.remove_from_favorite)
+            isFavorite = true
+        } else {
+            btn_favorite_detail_match.text = getString(R.string.add_to_favorite)
+            isFavorite = false
+        }
     }
 
     private fun isFavorited(event: Event): Boolean {
