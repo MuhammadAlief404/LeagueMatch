@@ -119,38 +119,46 @@ class DetailMatchFragment : Fragment() {
     private fun favoriteControl(data: Event) {
         favoriteCheck(data)
         if (isFavorited(data)) {
-            try {
-                context?.database?.use {
-                    delete(
-                        Favorites.TABLE_FAVORITE, "(EVENT_ID = {id})",
-                        "id" to data.idEvent
-                    )
-                }
-                toast("Match Removed from Favorite")
-                favoriteCheck(data)
-            } catch (e: SQLiteConstraintException) {
-                toast(e.localizedMessage)
-            }
+            removeFromFavorite(data)
         } else {
-            try {
-                context?.database?.use {
-                    insert(
-                        Favorites.TABLE_FAVORITE,
-                        Favorites.EVENT_ID to data.idEvent,
-                        Favorites.EVENT_NAME to data.strEvent,
-                        Favorites.DATE_EVENT to data.dateEvent,
-                        Favorites.HOME_NAME to data.strHomeTeam,
-                        Favorites.AWAY_NAME to data.strAwayTeam,
-                        Favorites.HOME_SCORE to data.intHomeScore,
-                        Favorites.AWAY_SCORE to data.intAwayScore
-                    )
-                    toast("Match Added to Favorite")
-                    favoriteCheck(data)
-                }
-            } catch (e: SQLiteConstraintException) {
-                toast(e.localizedMessage)
-            }
+            addToFavorite(data)
             btn_favorite_detail_match.text = getString(R.string.remove_from_favorite)
+        }
+    }
+
+    private fun addToFavorite(data: Event) {
+        try {
+            context?.database?.use {
+                insert(
+                    Favorites.TABLE_FAVORITE,
+                    Favorites.EVENT_ID to data.idEvent,
+                    Favorites.EVENT_NAME to data.strEvent,
+                    Favorites.DATE_EVENT to data.dateEvent,
+                    Favorites.HOME_NAME to data.strHomeTeam,
+                    Favorites.AWAY_NAME to data.strAwayTeam,
+                    Favorites.HOME_SCORE to data.intHomeScore,
+                    Favorites.AWAY_SCORE to data.intAwayScore
+                )
+                toast(getString(R.string.match_added))
+                favoriteCheck(data)
+            }
+        } catch (e: SQLiteConstraintException) {
+            toast(e.localizedMessage)
+        }
+    }
+
+    private fun removeFromFavorite(data: Event) {
+        try {
+            context?.database?.use {
+                delete(
+                    Favorites.TABLE_FAVORITE, "(EVENT_ID = {id})",
+                    "id" to data.idEvent
+                )
+            }
+            toast(getString(R.string.match_removed))
+            favoriteCheck(data)
+        } catch (e: SQLiteConstraintException) {
+            toast(e.localizedMessage)
         }
     }
 

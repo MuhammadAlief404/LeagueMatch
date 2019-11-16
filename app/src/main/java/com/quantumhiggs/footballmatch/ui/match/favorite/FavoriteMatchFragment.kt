@@ -20,9 +20,6 @@ class FavoriteMatchFragment : Fragment() {
     private lateinit var result: SelectQueryBuilder
     private lateinit var favorite: List<Favorites>
 
-    companion object {
-        fun newInstance() = FavoriteMatchFragment()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +37,15 @@ class FavoriteMatchFragment : Fragment() {
         context?.database?.use {
             result = select(Favorites.TABLE_FAVORITE)
             favorite = result.parseList(classParser())
-            showData(favorite)
+            if (favorite.isNotEmpty()) {
+                img_404_favorite.visibility = View.GONE
+                rv_list_favorite.visibility = View.VISIBLE
+                showData(favorite)
+            } else {
+                img_404_favorite.visibility = View.VISIBLE
+                rv_list_favorite.visibility = View.GONE
+            }
+
         }
     }
 

@@ -18,10 +18,6 @@ class ListLeagueFragment : Fragment() {
 
     private lateinit var viewModel: ListLeagueViewModel
 
-    companion object {
-        fun newInstance() = ListLeagueFragment()
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +37,11 @@ class ListLeagueFragment : Fragment() {
                 showData(t.leagues.filter {
                     it.strSport == "Soccer"
                 })
+                rv_list_league.visibility = View.VISIBLE
+                img_404_list_league.visibility = View.GONE
+            } else {
+                rv_list_league.visibility = View.GONE
+                img_404_list_league.visibility = View.VISIBLE
             }
         })
 

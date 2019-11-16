@@ -20,9 +20,6 @@ class SearchMatchFragment : Fragment() {
 
     private lateinit var viewModel: SearchMatchViewModel
 
-    companion object {
-        fun newInstance() = SearchMatchFragment()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,16 +36,40 @@ class SearchMatchFragment : Fragment() {
         list_search_match.layoutManager = LinearLayoutManager(context)
 
         viewModel.setListMatch().observe(this, Observer { t ->
-            showData(t.event)
+            if (t != null) {
+                if (!t.event.isNullOrEmpty()) {
+                    showData(t.event.filter {
+                        it.strSport == "Soccer"
+                    })
+                    img_404_search_match.visibility = View.GONE
+                    list_search_match.visibility = View.VISIBLE
+                }
+            } else {
+                img_404_search_match.visibility = View.VISIBLE
+                list_search_match.visibility = View.GONE
+            }
         })
 
         edt_search_match.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 viewModel.matchName = p0.toString()
                 viewModel.setListMatch().observe(this@SearchMatchFragment, Observer { t ->
-                    showData(t.event.filter {
-                        it.strEvent == "Soccer"
-                    })
+                    if (t != null) {
+                        if (!t.event.isNullOrEmpty()) {
+                            showData(t.event.filter {
+                                it.strSport == "Soccer"
+                            })
+                            img_404_search_match.visibility = View.GONE
+                            list_search_match.visibility = View.VISIBLE
+                        } else {
+                            img_404_search_match.visibility = View.VISIBLE
+                            list_search_match.visibility = View.GONE
+                        }
+
+                    } else {
+                        img_404_search_match.visibility = View.VISIBLE
+                        list_search_match.visibility = View.GONE
+                    }
                 })
             }
 
