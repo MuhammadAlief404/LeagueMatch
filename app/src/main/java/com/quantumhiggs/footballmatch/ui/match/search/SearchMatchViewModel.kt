@@ -8,7 +8,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SearchMatchViewModel(var matchName: String = "") : ViewModel() {
+class SearchMatchViewModel(var matchName: String = "English") : ViewModel() {
 
     private var listMatch = MutableLiveData<Sports>()
 

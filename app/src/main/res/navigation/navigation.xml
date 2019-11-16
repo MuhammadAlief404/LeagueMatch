@@ -2,6 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/navigation"
         app:startDestination="@id/listLeagueFragment">
 
     <fragment
@@ -10,12 +11,15 @@
             android:label="fragment_list_league"
             tools:layout="@layout/fragment_list_league">
         <action
+                android:id="@+id/action_detail_league"
                 app:destination="@id/detailLeagueFragmant"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
-        <action app:destination="@id/favoriteMatchFragment" />
+        <action
+                android:id="@+id/action_favorite_match"
+                app:destination="@id/favoriteMatchFragment" />
     </fragment>
     <fragment
             android:id="@+id/detailLeagueFragmant"
@@ -26,12 +30,15 @@
                 android:name="leagueId"
                 app:argType="string"/>
         <action
+                android:id="@+id/action_league_match"
                 app:destination="@id/leagueMatchFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
-        <action app:destination="@id/leagueMatchFragment" />
+        <action
+                android:id="@+id/action_detailLeagueFragmant_to_leagueMatchFragment"
+                app:destination="@id/leagueMatchFragment" />
     </fragment>
     <fragment
             android:id="@+id/leagueMatchFragment"
@@ -39,6 +46,7 @@
             android:label="fragment_league_match"
             tools:layout="@layout/fragment_league_match">
         <action
+                android:id="@+id/action_detail_match"
                 app:destination="@id/detailMatchFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim"
@@ -51,6 +59,7 @@
                 android:name="fanArt"
                 app:argType="string"/>
         <action
+                android:id="@+id/action_search_match"
                 app:destination="@id/searchMatchFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim"
@@ -72,6 +81,7 @@
             android:label="fragment_search_match"
             tools:layout="@layout/fragment_search_match">
         <action
+                android:id="@+id/action_searchMatchFragment_to_detailMatchFragment"
                 app:destination="@id/detailMatchFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim"
@@ -84,6 +94,7 @@
             android:label="fragment_favorite_match"
             tools:layout="@layout/fragment_favorite_match">
         <action
+                android:id="@+id/action_fav_toDetailMatch"
                 app:destination="@id/detailMatchFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim"

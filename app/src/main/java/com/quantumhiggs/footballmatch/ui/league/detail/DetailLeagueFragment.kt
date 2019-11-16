@@ -21,6 +21,9 @@ class DetailLeagueFragment : Fragment() {
     private lateinit var viewModel: DetailLeagueViewModel
     private lateinit var fanArt: String
 
+    companion object {
+        fun newInstance() = DetailLeagueFragment()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
