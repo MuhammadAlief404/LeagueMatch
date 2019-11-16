@@ -37,7 +37,11 @@ class ListLeagueFragment : Fragment() {
         rv_list_league.layoutManager = GridLayoutManager(context, 2)
 
         viewModel.setListLeague().observe(this, Observer { t ->
-            showData(t.leagues)
+            if (t != null) {
+                showData(t.leagues.filter {
+                    it.strSport == "Soccer"
+                })
+            }
         })
 
         fab_favorite_list_league.setOnClickListener {

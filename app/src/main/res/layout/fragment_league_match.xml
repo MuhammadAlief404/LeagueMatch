@@ -22,16 +22,16 @@
             android:focusable="true"/>
 
     <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
+            android:id="@+id/rv_list_match"
+            android:layout_width="0dp"
             android:layout_height="300dp"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            android:id="@+id/rv_list_match"
-            tools:listitem="@layout/item_list_match"/>
+            app:layout_constraintStart_toStartOf="parent"
+            tools:listitem="@layout/item_list_match" />
 
     <androidx.cardview.widget.CardView
             android:layout_width="0dp"

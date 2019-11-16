@@ -46,7 +46,9 @@ class SearchMatchFragment : Fragment() {
             override fun afterTextChanged(p0: Editable?) {
                 viewModel.matchName = p0.toString()
                 viewModel.setListMatch().observe(this@SearchMatchFragment, Observer { t ->
-                    showData(t.event)
+                    showData(t.event.filter {
+                        it.strEvent == "Soccer"
+                    })
                 })
             }
 
