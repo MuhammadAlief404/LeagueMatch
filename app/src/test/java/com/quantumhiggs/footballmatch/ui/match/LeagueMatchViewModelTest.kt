@@ -1,0 +1,3 @@
+package com.quantumhiggs.footballmatch.ui.match
+
+class LeagueMatchViewModelTest
