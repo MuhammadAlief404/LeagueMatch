@@ -1,6 +1,5 @@
 package com.quantumhiggs.footballmatch.ui.league.list
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
@@ -8,19 +7,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.quantumhiggs.footballmatch.R
 import com.quantumhiggs.footballmatch.model.League
+import com.quantumhiggs.footballmatch.ui.league.list.anko.ItemListUI
 import kotlinx.android.synthetic.main.item_list_league.view.*
+import org.jetbrains.anko.AnkoContext
 
 class ListLeagueAdapter(val league: List<League>) :
     RecyclerView.Adapter<ListLeagueAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_list_league,
-                parent,
-                false
-            )
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
+        ItemListUI().createView(AnkoContext.Companion.create(parent.context))
+    )
 
     override fun getItemCount(): Int = league.size
 

@@ -36,7 +36,10 @@ class DetailLeagueFragment : Fragment() {
         DetailLeagueViewModel.leaugeId = args.leagueId
         viewModel = ViewModelProviders.of(this).get(DetailLeagueViewModel::class.java)
         viewModel.setDetailLeague().observe(this, Observer { t ->
-            showData(t.leagues)
+            if (t != null) {
+                showData(t.leagues)
+            }
+
         })
 
         fab_detail_league.setOnClickListener {
