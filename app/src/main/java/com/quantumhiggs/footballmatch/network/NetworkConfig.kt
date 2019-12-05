@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class NetworkConfig {
+object NetworkConfig {
 
     private val BASE_URL = BuildConfig.BASE_URL
 

@@ -3,40 +3,50 @@ package com.quantumhiggs.footballmatch.ui.league.detail
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.quantumhiggs.footballmatch.model.Leagues
-import com.quantumhiggs.footballmatch.network.NetworkConfig
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.quantumhiggs.footballmatch.repository.FootballRepository
+import com.quantumhiggs.footballmatch.repository.FootballRepositoryCallback
 
-class DetailLeagueViewModel : ViewModel() {
+class DetailLeagueViewModel(private var footballRepository: FootballRepository = FootballRepository()) :
+    ViewModel() {
 
     private var listLeague = MutableLiveData<Leagues>()
 
     companion object {
-        var leaugeId: String = "1"
+        var leagueId: String = ""
     }
 
     init {
-        getDetailLeague(leaugeId)
+        getDetailLeague(leagueId)
     }
 
     private fun getDetailLeague(leaugeId: String) {
-        NetworkConfig()
-            .api()
-            .getDetailLeague(leaugeId)
-            .enqueue(object : Callback<Leagues> {
-                override fun onFailure(call: Call<Leagues>, t: Throwable) {
-                    listLeague.value = null
-                }
+//        NetworkConfig
+//            .api()
+//            .getDetailLeague(leaugeId)
+//            .enqueue(object : Callback<Leagues> {
+//                override fun onFailure(call: Call<Leagues>, t: Throwable) {
+//                    listLeague.value = null
+//                }
+//
+//                override fun onResponse(call: Call<Leagues>, response: Response<Leagues>) {
+//                    if (response.isSuccessful) {
+//                        listLeague.value = response.body()
+//                    } else {
+//                        listLeague.value = null
+//                    }
+//                }
+//            })
+        footballRepository.getDetailLeague(leaugeId, object : FootballRepositoryCallback<Leagues?> {
+            override fun onDataLoaded(data: Leagues?) {
+                listLeague.value = data
+            }
 
-                override fun onResponse(call: Call<Leagues>, response: Response<Leagues>) {
-                    if (response.isSuccessful) {
-                        listLeague.value = response.body()
-                    } else {
-                        listLeague.value = null
-                    }
-                }
-            })
+            override fun onDataError() {
+                listLeague.value = null
+            }
+
+        })
+
     }
 
     fun setDetailLeague(): MutableLiveData<Leagues> {

@@ -33,7 +33,7 @@ class DetailLeagueFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         val args by navArgs<DetailLeagueFragmentArgs>()
-        DetailLeagueViewModel.leaugeId = args.leagueId
+        DetailLeagueViewModel.leagueId = args.leagueId
         viewModel = ViewModelProviders.of(this).get(DetailLeagueViewModel::class.java)
         viewModel.setDetailLeague().observe(this, Observer { t ->
             if (t != null) {
@@ -44,7 +44,7 @@ class DetailLeagueFragment : Fragment() {
 
         fab_detail_league.setOnClickListener {
             val direction = DetailLeagueFragmentDirections.actionLeagueMatch(
-                DetailLeagueViewModel.leaugeId,
+                DetailLeagueViewModel.leagueId,
                 fanArt
             )
             it.findNavController().navigate(direction)

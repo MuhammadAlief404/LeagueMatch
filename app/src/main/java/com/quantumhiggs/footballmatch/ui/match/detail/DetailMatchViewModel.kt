@@ -26,7 +26,7 @@ class DetailMatchViewModel : ViewModel() {
     }
 
     private fun getDetailMatch(matchId: String) {
-        NetworkConfig()
+        NetworkConfig
             .api()
             .getDetailMatch(matchId)
             .enqueue(object : Callback<Sports> {
@@ -45,7 +45,7 @@ class DetailMatchViewModel : ViewModel() {
     }
 
     private fun getDetailHome(teamId: String) {
-        NetworkConfig()
+        NetworkConfig
             .api()
             .getTeamDetail(teamId)
             .enqueue(object : Callback<Teams> {
@@ -64,7 +64,7 @@ class DetailMatchViewModel : ViewModel() {
     }
 
     private fun getAwayDetail(teamId: String) {
-        NetworkConfig()
+        NetworkConfig
             .api()
             .getTeamDetail(teamId)
             .enqueue(object : Callback<Teams> {

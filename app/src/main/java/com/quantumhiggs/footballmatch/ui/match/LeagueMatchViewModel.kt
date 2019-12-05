@@ -23,7 +23,7 @@ class LeagueMatchViewModel : ViewModel() {
     }
 
     private fun getListPrevMatch(leaugeId: String) {
-        NetworkConfig()
+        NetworkConfig
             .api()
             .getPrevLeague(leaugeId)
             .enqueue(object : Callback<Sports> {
@@ -42,7 +42,7 @@ class LeagueMatchViewModel : ViewModel() {
     }
 
     private fun getListNextMatch(leaugeId: String) {
-        NetworkConfig()
+        NetworkConfig
             .api()
             .getNextLeague(leaugeId)
             .enqueue(object : Callback<Sports> {

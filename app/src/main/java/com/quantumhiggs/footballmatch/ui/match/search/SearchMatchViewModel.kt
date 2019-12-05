@@ -17,7 +17,7 @@ class SearchMatchViewModel(var matchName: String = "") : ViewModel() {
     }
 
     private fun getListMatch(matchName: String) {
-        NetworkConfig()
+        NetworkConfig
             .api()
             .getSearchMatch(matchName)
             .enqueue(object : Callback<Sports> {
