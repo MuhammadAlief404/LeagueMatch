@@ -1,6 +1,7 @@
 package com.quantumhiggs.footballmatch.repository
 
 import com.quantumhiggs.footballmatch.model.Leagues
+import com.quantumhiggs.footballmatch.model.Sports
 import com.quantumhiggs.footballmatch.network.NetworkConfig
 import retrofit2.Call
 import retrofit2.Callback
@@ -39,6 +40,25 @@ class FootballRepository {
                 }
 
                 override fun onResponse(call: Call<Leagues>, response: Response<Leagues>) {
+                    if (response.isSuccessful) {
+                        callback.onDataLoaded(response.body())
+                    } else {
+                        callback.onDataError()
+                    }
+                }
+            })
+    }
+
+    fun getListMatch(matchName: String, callback: FootballRepositoryCallback<Sports?>) {
+        NetworkConfig
+            .api()
+            .getSearchMatch(matchName)
+            .enqueue(object : Callback<Sports> {
+                override fun onFailure(call: Call<Sports>, t: Throwable) {
+                    callback.onDataError()
+                }
+
+                override fun onResponse(call: Call<Sports>, response: Response<Sports>) {
                     if (response.isSuccessful) {
                         callback.onDataLoaded(response.body())
                     } else {
