@@ -19,7 +19,7 @@ class DetailLeagueViewModel(private var footballRepository: FootballRepository =
         getDetailLeague(leagueId)
     }
 
-    private fun getDetailLeague(leaugeId: String) {
+    fun getDetailLeague(leaugeId: String) {
 //        NetworkConfig
 //            .api()
 //            .getDetailLeague(leaugeId)
@@ -47,6 +47,10 @@ class DetailLeagueViewModel(private var footballRepository: FootballRepository =
 
         })
 
+    }
+
+    fun setLeagueID(id: String) {
+        leagueId = id
     }
 
     fun setDetailLeague(): MutableLiveData<Leagues> {

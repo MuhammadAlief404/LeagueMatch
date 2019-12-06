@@ -34,7 +34,7 @@ class ListLeagueViewModelTest {
     }
 
     @Test
-    fun testGetListLeague() {
+    fun get_list_league() {
         argumentCaptor<FootballRepositoryCallback<Leagues?>>().apply {
             verify(footballRepository).getListLeague(capture())
             firstValue.onDataLoaded(footballResponse)

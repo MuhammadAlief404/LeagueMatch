@@ -25,22 +25,27 @@ class DetailLeagueViewModelTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
+    var id = ""
+
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         viewModel = DetailLeagueViewModel(footballRepository)
+        viewModel.setLeagueID(id)
     }
 
     @Test
-    fun testGetDetailLeague() {
+    fun get_detail_league() {
 
-        val id = "4346"
-        DetailLeagueViewModel.leagueId = id
+        id = "4346"
+
+        viewModel.getDetailLeague(id)
 
         argumentCaptor<FootballRepositoryCallback<Leagues?>>().apply {
             verify(footballRepository).getDetailLeague(eq(id), capture())
             firstValue.onDataLoaded(footballResponse)
         }
+        verify(viewModel.setDetailLeague().value)
     }
 }
