@@ -67,4 +67,42 @@ class FootballRepository {
                 }
             })
     }
+
+    fun getListPrevMatch(leaugeId: String, callback: FootballRepositoryCallback<Sports?>) {
+        NetworkConfig
+            .api()
+            .getPrevLeague(leaugeId)
+            .enqueue(object : Callback<Sports> {
+                override fun onFailure(call: Call<Sports>, t: Throwable) {
+                    callback.onDataError()
+                }
+
+                override fun onResponse(call: Call<Sports>, response: Response<Sports>) {
+                    if (response.isSuccessful) {
+                        callback.onDataLoaded(response.body())
+                    } else {
+                        callback.onDataError()
+                    }
+                }
+            })
+    }
+
+    fun getListNextMatch(leaugeId: String, callback: FootballRepositoryCallback<Sports?>) {
+        NetworkConfig
+            .api()
+            .getNextLeague(leaugeId)
+            .enqueue(object : Callback<Sports> {
+                override fun onFailure(call: Call<Sports>, t: Throwable) {
+                    callback.onDataError()
+                }
+
+                override fun onResponse(call: Call<Sports>, response: Response<Sports>) {
+                    if (response.isSuccessful) {
+                        callback.onDataLoaded(response.body())
+                    } else {
+                        callback.onDataError()
+                    }
+                }
+            })
+    }
 }
