@@ -2,6 +2,7 @@ package com.quantumhiggs.footballmatch.repository
 
 import com.quantumhiggs.footballmatch.model.Leagues
 import com.quantumhiggs.footballmatch.model.Sports
+import com.quantumhiggs.footballmatch.model.Teams
 import com.quantumhiggs.footballmatch.network.NetworkConfig
 import retrofit2.Call
 import retrofit2.Callback
@@ -105,4 +106,62 @@ class FootballRepository {
                 }
             })
     }
+
+    fun getDetailMatch(matchId: String, callback: FootballRepositoryCallback<Sports?>) {
+        NetworkConfig
+            .api()
+            .getDetailMatch(matchId)
+            .enqueue(object : Callback<Sports> {
+                override fun onFailure(call: Call<Sports>, t: Throwable) {
+                    callback.onDataError()
+                }
+
+                override fun onResponse(call: Call<Sports>, response: Response<Sports>) {
+                    if (response.isSuccessful) {
+                        callback.onDataLoaded(response.body())
+                    } else {
+                        callback.onDataError()
+                    }
+                }
+            })
+    }
+
+    fun getDetailHome(teamId: String, callback: FootballRepositoryCallback<Teams?>) {
+        NetworkConfig
+            .api()
+            .getTeamDetail(teamId)
+            .enqueue(object : Callback<Teams> {
+                override fun onFailure(call: Call<Teams>, t: Throwable) {
+                    callback.onDataError()
+                }
+
+                override fun onResponse(call: Call<Teams>, response: Response<Teams>) {
+                    if (response.isSuccessful) {
+                        callback.onDataLoaded(response.body())
+                    } else {
+                        callback.onDataError()
+                    }
+                }
+            })
+    }
+
+    fun getAwayDetail(teamId: String, callback: FootballRepositoryCallback<Teams?>) {
+        NetworkConfig
+            .api()
+            .getTeamDetail(teamId)
+            .enqueue(object : Callback<Teams> {
+                override fun onFailure(call: Call<Teams>, t: Throwable) {
+                    callback.onDataError()
+                }
+
+                override fun onResponse(call: Call<Teams>, response: Response<Teams>) {
+                    if (response.isSuccessful) {
+                        callback.onDataLoaded(response.body())
+                    } else {
+                        callback.onDataError()
+                    }
+                }
+            })
+    }
+
 }
