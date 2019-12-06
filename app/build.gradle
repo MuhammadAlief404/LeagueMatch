@@ -54,7 +54,13 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:3.0.0'
     testImplementation "org.mockito:mockito-inline:3.0.0"
     androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    debugImplementation ("androidx.fragment:fragment-testing:1.1.0"){
+            exclude group: 'androidx.test', module: 'core'}
+
+
+
 
     //anko
     implementation "org.jetbrains.anko:anko:$anko_version"
@@ -77,4 +83,5 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
+
 }
