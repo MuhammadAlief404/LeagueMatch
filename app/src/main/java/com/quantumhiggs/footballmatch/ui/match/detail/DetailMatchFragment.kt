@@ -44,7 +44,7 @@ class DetailMatchFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(DetailMatchViewModel::class.java)
 
-        viewModel.setDetailMatch().observe(this, Observer { t ->
+        viewModel.detailMatch.observe(this, Observer { t ->
             showData(t.events)
         })
     }

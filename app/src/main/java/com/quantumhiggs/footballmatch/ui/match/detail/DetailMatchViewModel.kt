@@ -4,20 +4,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.quantumhiggs.footballmatch.model.Sports
 import com.quantumhiggs.footballmatch.model.Teams
-import com.quantumhiggs.footballmatch.repository.FootballRepository
-import com.quantumhiggs.footballmatch.repository.FootballRepositoryCallback
+import com.quantumhiggs.footballmatch.network.NetworkConfig
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class DetailMatchViewModel(private var footballRepository: FootballRepository = FootballRepository()) :
-    ViewModel() {
+class DetailMatchViewModel : ViewModel() {
 
-    private var detailMatch = MutableLiveData<Sports>()
-    private var homeDetail = MutableLiveData<Teams>()
-    private var awayDetail = MutableLiveData<Teams>()
+    var detailMatch = MutableLiveData<Sports>()
+    var homeDetail = MutableLiveData<Teams>()
+    var awayDetail = MutableLiveData<Teams>()
 
     companion object {
-        var matchId: String = ""
-        var homeId: String = ""
-        var awayId: String = ""
+        var matchId: String = "441613"
+        var homeId: String = "133605"
+        var awayId: String = "2112"
     }
 
     init {
@@ -25,107 +26,61 @@ class DetailMatchViewModel(private var footballRepository: FootballRepository = 
     }
 
     fun getDetailMatch(matchId: String) {
-//        NetworkConfig
-//            .api()
-//            .getDetailMatch(matchId)
-//            .enqueue(object : Callback<Sports> {
-//                override fun onFailure(call: Call<Sports>, t: Throwable) {
-//                    detailMatch.value = null
-//                }
-//
-//                override fun onResponse(call: Call<Sports>, response: Response<Sports>) {
-//                    if (response.isSuccessful) {
-//                        detailMatch.value = response.body()
-//                    } else {
-//                        detailMatch.value = null
-//                    }
-//                }
-//            })
-        footballRepository.getDetailMatch(matchId, object : FootballRepositoryCallback<Sports?> {
-            override fun onDataLoaded(data: Sports?) {
-                detailMatch.value = data
-            }
+        NetworkConfig
+            .api()
+            .getDetailMatch(matchId)
+            .enqueue(object : Callback<Sports> {
+                override fun onFailure(call: Call<Sports>, t: Throwable) {
+                    detailMatch.value = null
+                }
 
-            override fun onDataError() {
-                detailMatch.value = null
-            }
+                override fun onResponse(call: Call<Sports>, response: Response<Sports>) {
+                    if (response.isSuccessful) {
+                        detailMatch.value = response.body()
+                    } else {
+                        detailMatch.value = null
+                    }
+                }
+            })
 
-        })
-
-    }
-
-    fun setMatchID(id: String) {
-        matchId = id
-    }
-
-    fun setHomeID(id: String) {
-        homeId = id
-    }
-
-    fun setAwayID(id: String) {
-        awayId = id
     }
 
     fun getDetailHome(teamId: String) {
-//        NetworkConfig
-//            .api()
-//            .getTeamDetail(teamId)
-//            .enqueue(object : Callback<Teams> {
-//                override fun onFailure(call: Call<Teams>, t: Throwable) {
-//                    homeDetail.value = null
-//                }
-//
-//                override fun onResponse(call: Call<Teams>, response: Response<Teams>) {
-//                    if (response.isSuccessful) {
-//                        homeDetail.value = response.body()
-//                    } else {
-//                        homeDetail.value = null
-//                    }
-//                }
-//            })
-        footballRepository.getDetailHome(teamId, object : FootballRepositoryCallback<Teams?> {
-            override fun onDataLoaded(data: Teams?) {
-                homeDetail.value = data
-            }
+        NetworkConfig
+            .api()
+            .getTeamDetail(teamId)
+            .enqueue(object : Callback<Teams> {
+                override fun onFailure(call: Call<Teams>, t: Throwable) {
+                    homeDetail.value = null
+                }
 
-            override fun onDataError() {
-                homeDetail.value = null
-            }
-
-        })
+                override fun onResponse(call: Call<Teams>, response: Response<Teams>) {
+                    if (response.isSuccessful) {
+                        homeDetail.value = response.body()
+                    } else {
+                        homeDetail.value = null
+                    }
+                }
+            })
     }
 
     fun getAwayDetail(teamId: String) {
-//        NetworkConfig
-//            .api()
-//            .getTeamDetail(teamId)
-//            .enqueue(object : Callback<Teams> {
-//                override fun onFailure(call: Call<Teams>, t: Throwable) {
-//                    awayDetail.value = null
-//                }
-//
-//                override fun onResponse(call: Call<Teams>, response: Response<Teams>) {
-//                    if (response.isSuccessful) {
-//                        awayDetail.value = response.body()
-//                    } else {
-//                        awayDetail.value = null
-//                    }
-//                }
-//            })
-        footballRepository.getAwayDetail(teamId, object : FootballRepositoryCallback<Teams?> {
-            override fun onDataLoaded(data: Teams?) {
-                awayDetail.value = data
-            }
+        NetworkConfig
+            .api()
+            .getTeamDetail(teamId)
+            .enqueue(object : Callback<Teams> {
+                override fun onFailure(call: Call<Teams>, t: Throwable) {
+                    awayDetail.value = null
+                }
 
-            override fun onDataError() {
-                awayDetail.value = null
-            }
-
-        })
-    }
-
-    fun setDetailMatch(): MutableLiveData<Sports> {
-        return detailMatch
+                override fun onResponse(call: Call<Teams>, response: Response<Teams>) {
+                    if (response.isSuccessful) {
+                        awayDetail.value = response.body()
+                    } else {
+                        awayDetail.value = null
+                    }
+                }
+            })
     }
 
     fun setHomeDetail(): MutableLiveData<Teams> {

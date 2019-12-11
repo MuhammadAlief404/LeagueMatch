@@ -1,31 +1,16 @@
 package com.quantumhiggs.footballmatch.ui.match.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.nhaarman.mockito_kotlin.argumentCaptor
-import com.nhaarman.mockito_kotlin.eq
-import com.nhaarman.mockito_kotlin.verify
-import com.quantumhiggs.footballmatch.model.Sports
-import com.quantumhiggs.footballmatch.model.Teams
-import com.quantumhiggs.footballmatch.repository.FootballRepository
-import com.quantumhiggs.footballmatch.repository.FootballRepositoryCallback
+import com.quantumhiggs.footballmatch.getOrAwaitValue
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
 class DetailMatchViewModelTest {
 
     private lateinit var viewModel: DetailMatchViewModel
-
-    @Mock
-    private lateinit var footballResponse: Sports
-
-    @Mock
-    private lateinit var teamResponse: Teams
-
-    @Mock
-    private lateinit var footballRepository: FootballRepository
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -36,44 +21,43 @@ class DetailMatchViewModelTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        viewModel = DetailMatchViewModel(footballRepository)
-        viewModel.setMatchID(id)
+        viewModel = DetailMatchViewModel()
     }
 
     @Test
     fun get_detail_match() {
 
-        id = "4346"
+        id = "441613"
 
         viewModel.getDetailMatch(id)
 
-        argumentCaptor<FootballRepositoryCallback<Sports?>>().apply {
-            verify(footballRepository).getDetailMatch(eq(id), capture())
-            firstValue.onDataLoaded(footballResponse)
-        }
+        print(viewModel.detailMatch.getOrAwaitValue())
+
+        Assert.assertNotNull(viewModel.detailMatch.getOrAwaitValue())
+        Assert.assertEquals(viewModel.detailMatch.getOrAwaitValue().events[0].idEvent, id)
+        Assert.assertEquals(
+            viewModel.detailMatch.getOrAwaitValue().events[0].strEvent,
+            "Liverpool vs Swansea"
+        )
     }
 
     @Test
     fun get_detail_home() {
-        id = "2112"
+        id = "133605"
 
         viewModel.getDetailHome(id)
 
-        argumentCaptor<FootballRepositoryCallback<Teams?>>().apply {
-            verify(footballRepository).getDetailHome(eq(id), capture())
-            firstValue.onDataLoaded(teamResponse)
-        }
+        Assert.assertNotNull(viewModel.homeDetail.getOrAwaitValue())
+        Assert.assertEquals(viewModel.homeDetail.getOrAwaitValue().teams[0].strTeam, "QPR")
     }
 
     @Test
     fun get_detail_away() {
-        id = "2112"
+        id = "133604"
 
         viewModel.getAwayDetail(id)
 
-        argumentCaptor<FootballRepositoryCallback<Teams?>>().apply {
-            verify(footballRepository).getAwayDetail(eq(id), capture())
-            firstValue.onDataLoaded(teamResponse)
-        }
+        Assert.assertNotNull(viewModel.awayDetail.getOrAwaitValue())
+        Assert.assertEquals(viewModel.awayDetail.getOrAwaitValue().teams[0].strTeam, "Arsenal")
     }
 }
