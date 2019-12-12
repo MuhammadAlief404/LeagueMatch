@@ -29,4 +29,11 @@
     <string name="team_info">Team Info</string>
     <string name="match">Match</string>
     <string name="players">Players</string>
+    <string name="standings">Standings</string>
+    <string name="played">Played :</string>
+    <string name="goals">Goals</string>
+    <string name="win">Win</string>
+    <string name="draw">Draw</string>
+    <string name="loss">Loss</string>
+    <string name="total">Total</string>
 </resources>

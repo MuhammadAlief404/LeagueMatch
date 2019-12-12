@@ -1,6 +1,6 @@
 package com.quantumhiggs.footballmatch.model
 
-data class Classement(
+data class Standings(
     val table: List<Table>
 )
 

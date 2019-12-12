@@ -32,7 +32,7 @@ interface ApiServices {
     fun getListTeam(@Query("id") id: String): Call<Teams>
 
     @GET("lookuptable.php?")
-    fun getClassement(@Query("id") id: String): Call<Classement>
+    fun getClassement(@Query("l") id: String): Call<Standings>
 
     @GET("lookupplayer.php?")
     fun getPlayers(@Query("id") id: String): Call<Players>

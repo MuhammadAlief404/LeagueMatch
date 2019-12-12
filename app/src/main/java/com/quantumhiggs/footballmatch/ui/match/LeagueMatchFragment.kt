@@ -15,9 +15,11 @@ import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.quantumhiggs.footballmatch.R
 import com.quantumhiggs.footballmatch.model.Event
+import com.quantumhiggs.footballmatch.model.Table
 import com.quantumhiggs.footballmatch.model.Team
 import com.quantumhiggs.footballmatch.ui.match.adapter.LeagueMatchAdapter
 import com.quantumhiggs.footballmatch.ui.match.adapter.LeagueMatchTeamAdapter
+import com.quantumhiggs.footballmatch.ui.match.adapter.StandingsAdapter
 import kotlinx.android.synthetic.main.fragment_league_match.*
 
 
@@ -82,6 +84,10 @@ class LeagueMatchFragment : Fragment() {
             LeagueMatchTeamAdapter(datas)
     }
 
+    private fun showDataStandings(datas: List<Table>) {
+        rv_list_match.adapter = StandingsAdapter(datas)
+    }
+
     private fun observeViewModel(position: Int?) {
         if (position == 0) {
             viewModel.setListPrevMatch().observe(this, Observer { t ->
@@ -94,6 +100,10 @@ class LeagueMatchFragment : Fragment() {
         } else if (position == 2) {
             viewModel.setListTeams().observe(this, Observer { t ->
                 showDataTeams(t.teams)
+            })
+        } else if (position == 3) {
+            viewModel.listStandings.observe(this, Observer { t ->
+                showDataStandings(t.table)
             })
         }
     }

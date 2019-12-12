@@ -3,6 +3,7 @@ package com.quantumhiggs.footballmatch.ui.match
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.quantumhiggs.footballmatch.model.Sports
+import com.quantumhiggs.footballmatch.model.Standings
 import com.quantumhiggs.footballmatch.model.Teams
 import com.quantumhiggs.footballmatch.network.NetworkConfig
 import retrofit2.Call
@@ -14,6 +15,7 @@ class LeagueMatchViewModel : ViewModel() {
     var listPrevMatch = MutableLiveData<Sports>()
     var listNextMatch = MutableLiveData<Sports>()
     var listTeams = MutableLiveData<Teams>()
+    var listStandings = MutableLiveData<Standings>()
 
     companion object {
         var leaugeId: String = "4387"
@@ -23,6 +25,7 @@ class LeagueMatchViewModel : ViewModel() {
         getListPrevMatch(leaugeId)
         getListNextMatch(leaugeId)
         getListTeams(leaugeId)
+        getListStandings(leaugeId)
     }
 
     fun getListPrevMatch(leaugeId: String) {
@@ -78,6 +81,26 @@ class LeagueMatchViewModel : ViewModel() {
                     }
                     else {
                         listTeams.value = null
+                    }
+                }
+
+            })
+    }
+
+    fun getListStandings(leaugeId: String) {
+        NetworkConfig
+            .api()
+            .getClassement(leaugeId)
+            .enqueue(object : Callback<Standings> {
+                override fun onFailure(call: Call<Standings>, t: Throwable) {
+                    listStandings.value = null
+                }
+
+                override fun onResponse(call: Call<Standings>, response: Response<Standings>) {
+                    if (response.isSuccessful) {
+                        listStandings.value = response.body()
+                    } else {
+                        listStandings.value = null
                     }
                 }
 
