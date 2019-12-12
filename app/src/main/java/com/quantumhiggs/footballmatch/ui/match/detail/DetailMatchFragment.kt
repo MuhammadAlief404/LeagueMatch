@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.quantumhiggs.footballmatch.R
 import com.quantumhiggs.footballmatch.db.database
 import com.quantumhiggs.footballmatch.model.Event
-import com.quantumhiggs.footballmatch.model.Favorites
+import com.quantumhiggs.footballmatch.model.favorite.MatchFavorite
 import com.quantumhiggs.footballmatch.model.Team
 import com.quantumhiggs.footballmatch.utils.CommonFunction.checkNullOrEmpty
 import kotlinx.android.synthetic.main.fragment_detail_match.*
@@ -130,14 +130,14 @@ class DetailMatchFragment : Fragment() {
         try {
             context?.database?.use {
                 insert(
-                    Favorites.TABLE_FAVORITE,
-                    Favorites.EVENT_ID to data.idEvent,
-                    Favorites.EVENT_NAME to data.strEvent,
-                    Favorites.DATE_EVENT to data.dateEvent,
-                    Favorites.HOME_NAME to data.strHomeTeam,
-                    Favorites.AWAY_NAME to data.strAwayTeam,
-                    Favorites.HOME_SCORE to data.intHomeScore,
-                    Favorites.AWAY_SCORE to data.intAwayScore
+                    MatchFavorite.TABLE_FAVORITE,
+                    MatchFavorite.EVENT_ID to data.idEvent,
+                    MatchFavorite.EVENT_NAME to data.strEvent,
+                    MatchFavorite.DATE_EVENT to data.dateEvent,
+                    MatchFavorite.HOME_NAME to data.strHomeTeam,
+                    MatchFavorite.AWAY_NAME to data.strAwayTeam,
+                    MatchFavorite.HOME_SCORE to data.intHomeScore,
+                    MatchFavorite.AWAY_SCORE to data.intAwayScore
                 )
                 toast(getString(R.string.match_added))
                 favoriteCheck(data)
@@ -151,7 +151,7 @@ class DetailMatchFragment : Fragment() {
         try {
             context?.database?.use {
                 delete(
-                    Favorites.TABLE_FAVORITE, "(EVENT_ID = {id})",
+                    MatchFavorite.TABLE_FAVORITE, "(EVENT_ID = {id})",
                     "id" to data.idEvent
                 )
             }
@@ -175,12 +175,12 @@ class DetailMatchFragment : Fragment() {
     private fun isFavorited(event: Event): Boolean {
         var temp = false
         context?.database?.use {
-            val result = select(Favorites.TABLE_FAVORITE)
+            val result = select(MatchFavorite.TABLE_FAVORITE)
                 .whereArgs(
                     "(EVENT_ID = {id})",
                     "id" to event.idEvent
                 )
-            val favorite = result.parseList(classParser<Favorites>())
+            val favorite = result.parseList(classParser<MatchFavorite>())
             if (favorite.isNotEmpty()) {
                 temp = true
             }

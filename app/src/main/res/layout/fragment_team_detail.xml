@@ -36,12 +36,12 @@
             <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Team Info" />
+                    android:text="@string/team_info" />
 
             <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Match" />
+                    android:text="@string/match" />
         </com.google.android.material.tabs.TabLayout>
 
         <androidx.recyclerview.widget.RecyclerView

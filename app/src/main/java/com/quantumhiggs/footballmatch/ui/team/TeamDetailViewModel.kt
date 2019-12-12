@@ -2,6 +2,7 @@ package com.quantumhiggs.footballmatch.ui.team
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.quantumhiggs.footballmatch.model.Players
 import com.quantumhiggs.footballmatch.model.Sports
 import com.quantumhiggs.footballmatch.model.Team
 import com.quantumhiggs.footballmatch.model.Teams
@@ -13,6 +14,7 @@ import retrofit2.Response
 class TeamDetailViewModel : ViewModel() {
     var detailTeam = MutableLiveData<Teams>()
     var matchTeam = MutableLiveData<Sports>()
+    var listPlayer = MutableLiveData<Players>()
 
     companion object{
         var teamId : String = ""
@@ -56,6 +58,25 @@ class TeamDetailViewModel : ViewModel() {
                         matchTeam.value = response.body()
                     } else {
                         matchTeam.value = null
+                    }
+                }
+            })
+    }
+
+    fun getListPlayer(id : String) {
+        NetworkConfig
+            .api()
+            .getPlayers(id)
+            .enqueue(object : Callback<Players> {
+                override fun onFailure(call: Call<Players>, t: Throwable) {
+                    listPlayer.value = null
+                }
+
+                override fun onResponse(call: Call<Players>, response: Response<Players>) {
+                    if (response.isSuccessful) {
+                        listPlayer.value = response.body()
+                    } else {
+                        listPlayer.value = null
                     }
                 }
             })

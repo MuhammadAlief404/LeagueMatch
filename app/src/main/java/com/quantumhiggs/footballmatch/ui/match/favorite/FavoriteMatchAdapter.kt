@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.quantumhiggs.footballmatch.R
-import com.quantumhiggs.footballmatch.model.Favorites
+import com.quantumhiggs.footballmatch.model.favorite.MatchFavorite
 import com.quantumhiggs.footballmatch.utils.CommonFunction.checkNullOrEmpty
 import kotlinx.android.synthetic.main.item_list_match.view.*
 
-class FavoriteMatchAdapter(private val sports: List<Favorites>) :
+class FavoriteMatchAdapter(private val sports: List<MatchFavorite>) :
     RecyclerView.Adapter<FavoriteMatchAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -28,7 +28,7 @@ class FavoriteMatchAdapter(private val sports: List<Favorites>) :
         holder.bindItems(sports[position])
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindItems(match: Favorites) {
+        fun bindItems(match: MatchFavorite) {
             itemView.item_list_match_title.text = checkNullOrEmpty(match.eventName)
             itemView.item_list_match_subtitle.text = checkNullOrEmpty(match.dateEvent)
             itemView.item_list_match_name_left.text = checkNullOrEmpty(match.homeName)

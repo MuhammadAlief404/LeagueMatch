@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.quantumhiggs.footballmatch.R
 import com.quantumhiggs.footballmatch.db.database
-import com.quantumhiggs.footballmatch.model.Favorites
+import com.quantumhiggs.footballmatch.model.favorite.MatchFavorite
 import kotlinx.android.synthetic.main.fragment_favorite_match.*
 import org.jetbrains.anko.db.SelectQueryBuilder
 import org.jetbrains.anko.db.classParser
@@ -18,7 +18,7 @@ import org.jetbrains.anko.db.select
 class FavoriteMatchFragment : Fragment() {
 
     private lateinit var result: SelectQueryBuilder
-    private lateinit var favorite: List<Favorites>
+    private lateinit var favorite: List<MatchFavorite>
 
 
     override fun onCreateView(
@@ -35,7 +35,7 @@ class FavoriteMatchFragment : Fragment() {
         rv_list_favorite.layoutManager = LinearLayoutManager(context)
 
         context?.database?.use {
-            result = select(Favorites.TABLE_FAVORITE)
+            result = select(MatchFavorite.TABLE_FAVORITE)
             favorite = result.parseList(classParser())
             if (favorite.isNotEmpty()) {
                 img_404_favorite.visibility = View.GONE
@@ -49,7 +49,7 @@ class FavoriteMatchFragment : Fragment() {
         }
     }
 
-    private fun showData(data: List<Favorites>) {
+    private fun showData(data: List<MatchFavorite>) {
         rv_list_favorite.adapter = FavoriteMatchAdapter(data)
     }
 }

@@ -26,4 +26,7 @@
     <string name="league">League :</string>
     <string name="formed_year">Formed Year :</string>
     <string name="description">Description :</string>
+    <string name="team_info">Team Info</string>
+    <string name="match">Match</string>
+    <string name="players">Players</string>
 </resources>

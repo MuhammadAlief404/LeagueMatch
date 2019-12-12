@@ -1,6 +1,6 @@
-package com.quantumhiggs.footballmatch.model
+package com.quantumhiggs.footballmatch.model.favorite
 
-data class Favorites(
+data class MatchFavorite(
     val id: Long?,
     val eventId: String?,
     val eventName: String?,

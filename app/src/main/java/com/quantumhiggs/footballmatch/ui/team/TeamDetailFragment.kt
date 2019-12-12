@@ -69,6 +69,7 @@ class TeamDetailFragment : Fragment() {
 
     private fun observeViewModel(pos: Int) {
         if (pos == 0) {
+
             viewModel.detailTeam.observe(this, Observer { t ->
                 detail_team_name.text = checkNullOrEmpty(t.teams[0].strTeam)
                 detail_team_description.text = checkNullOrEmpty(t.teams[0].strDescriptionEN)
@@ -80,7 +81,8 @@ class TeamDetailFragment : Fragment() {
                     .placeholder(R.drawable.ic_trophy)
                     .into(detail_team_logo)
             })
-        } else {
+        }
+        else if (pos == 1) {
             viewModel.matchTeam.observe(this, Observer { t ->
                 rv_list_team.adapter = LeagueMatchAdapter(t.events)
             })
