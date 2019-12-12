@@ -20,6 +20,11 @@ class FavoriteMatchFragment : Fragment() {
     private lateinit var result: SelectQueryBuilder
     private lateinit var favorite: List<MatchFavorite>
 
+    /**
+     * TODO
+     * 1. List favorite Team disini
+     * 2. check lagi apa aja yg blom*/
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
