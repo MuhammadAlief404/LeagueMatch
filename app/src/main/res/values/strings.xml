@@ -21,7 +21,6 @@
     <string name="team_list">Team List</string>
     <string name="logo_teams">Logo Teams</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="league">League :</string>
     <string name="formed_year">Formed Year :</string>
@@ -36,4 +35,9 @@
     <string name="draw">Draw</string>
     <string name="loss">Loss</string>
     <string name="total">Total</string>
+
+    <string-array name="spinner_item">
+        <item>Match Name</item>
+        <item>Team Name</item>
+    </string-array>
 </resources>

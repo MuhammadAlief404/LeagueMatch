@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.quantumhiggs.footballmatch.R
 import com.quantumhiggs.footballmatch.model.Event
+import com.quantumhiggs.footballmatch.model.Team
+import com.quantumhiggs.footballmatch.ui.match.adapter.LeagueMatchTeamAdapter
 import kotlinx.android.synthetic.main.fragment_search_match.*
 
 
@@ -35,42 +37,63 @@ class SearchMatchFragment : Fragment() {
 
         list_search_match.layoutManager = LinearLayoutManager(context)
 
-        viewModel.setListMatch().observe(this, Observer { t ->
-            if (t != null) {
-                if (!t.event.isNullOrEmpty()) {
-                    showData(t.event.filter {
-                        it.strSport == "Soccer"
-                    })
-                    img_404_search_match.visibility = View.GONE
-                    list_search_match.visibility = View.VISIBLE
-                }
-            } else {
-                img_404_search_match.visibility = View.VISIBLE
-                list_search_match.visibility = View.GONE
-            }
-        })
+//        viewModel.setListMatch().observe(this, Observer { t ->
+//            if (t != null) {
+//                if (!t.event.isNullOrEmpty()) {
+//                    showData(t.event.filter {
+//                        it.strSport == "Soccer"
+//                    })
+//                    img_404_search_match.visibility = View.GONE
+//                    list_search_match.visibility = View.VISIBLE
+//                }
+//            } else {
+//                img_404_search_match.visibility = View.VISIBLE
+//                list_search_match.visibility = View.GONE
+//            }
+//        })
 
         edt_search_match.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 viewModel.matchName = p0.toString()
-                viewModel.setListMatch().observe(this@SearchMatchFragment, Observer { t ->
-                    if (t != null) {
-                        if (!t.event.isNullOrEmpty()) {
-                            showData(t.event.filter {
-                                it.strSport == "Soccer"
-                            })
-                            img_404_search_match.visibility = View.GONE
-                            list_search_match.visibility = View.VISIBLE
+                if (search_spinner.selectedItem.equals("Match Name")) {
+                    viewModel.setListMatch().observe(this@SearchMatchFragment, Observer { t ->
+                        if (t != null) {
+                            if (!t.event.isNullOrEmpty()) {
+                                showData(t.event.filter {
+                                    it.strSport == "Soccer"
+                                })
+                                img_404_search_match.visibility = View.GONE
+                                list_search_match.visibility = View.VISIBLE
+                            } else {
+                                img_404_search_match.visibility = View.VISIBLE
+                                list_search_match.visibility = View.GONE
+                            }
+
                         } else {
                             img_404_search_match.visibility = View.VISIBLE
                             list_search_match.visibility = View.GONE
                         }
+                    })
+                } else {
+                    viewModel.setTeamList().observe(this@SearchMatchFragment, Observer { t ->
+                        if (t != null) {
+                            if (!t.teams.isNullOrEmpty()) {
+                                showTeam(t.teams.filter {
+                                    it.strSport == "Soccer"
+                                })
+                                img_404_search_match.visibility = View.GONE
+                                list_search_match.visibility = View.VISIBLE
+                            } else {
+                                img_404_search_match.visibility = View.VISIBLE
+                                list_search_match.visibility = View.GONE
+                            }
 
-                    } else {
-                        img_404_search_match.visibility = View.VISIBLE
-                        list_search_match.visibility = View.GONE
-                    }
-                })
+                        } else {
+                            img_404_search_match.visibility = View.VISIBLE
+                            list_search_match.visibility = View.GONE
+                        }
+                    })
+                }
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -86,5 +109,9 @@ class SearchMatchFragment : Fragment() {
 
     private fun showData(datas: List<Event>) {
         list_search_match.adapter = SearchMatchAdapter(datas)
+    }
+
+    private fun showTeam(datas: List<Team>) {
+        list_search_match.adapter = LeagueMatchTeamAdapter(datas)
     }
 }
