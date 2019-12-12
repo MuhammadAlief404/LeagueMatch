@@ -2,7 +2,8 @@ package com.quantumhiggs.footballmatch.model
 
 data class Sports(
     var events: List<Event>,
-    var event: List<Event>
+    var event: List<Event>,
+    var results: List<Event>
 )
 
 data class Event(

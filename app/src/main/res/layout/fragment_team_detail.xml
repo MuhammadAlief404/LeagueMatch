@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
         <ImageView
                 android:id="@+id/detail_team_logo"
@@ -41,7 +41,12 @@
             <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/match" />
+                    android:text="@string/prev_match" />
+
+            <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/next_match" />
         </com.google.android.material.tabs.TabLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -149,6 +154,7 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="16dp"
                         tools:text="TextView"
+                        android:maxLines="4"
                         app:layout_constraintBottom_toTopOf="@+id/detail_team_btn_add"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

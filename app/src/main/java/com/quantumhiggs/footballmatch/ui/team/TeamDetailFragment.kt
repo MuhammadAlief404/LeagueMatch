@@ -68,9 +68,8 @@ class TeamDetailFragment : Fragment() {
     }
 
     private fun observeViewModel(pos: Int) {
-        if (pos == 0) {
-
-            viewModel.detailTeam.observe(this, Observer { t ->
+        when (pos) {
+            0 -> viewModel.detailTeam.observe(this, Observer { t ->
                 detail_team_name.text = checkNullOrEmpty(t.teams[0].strTeam)
                 detail_team_description.text = checkNullOrEmpty(t.teams[0].strDescriptionEN)
                 detail_team_year.text = checkNullOrEmpty(t.teams[0].intFormedYear)
@@ -81,10 +80,15 @@ class TeamDetailFragment : Fragment() {
                     .placeholder(R.drawable.ic_trophy)
                     .into(detail_team_logo)
             })
-        }
-        else if (pos == 1) {
-            viewModel.matchTeam.observe(this, Observer { t ->
-                rv_list_team.adapter = LeagueMatchAdapter(t.events)
+            1 -> viewModel.prevMatch.observe(this, Observer { t ->
+                if (!t.results.isNullOrEmpty()) {
+                    rv_list_team.adapter = LeagueMatchAdapter(t.results)
+                }
+            })
+            2 -> viewModel.nextMatch.observe(this, Observer { t ->
+                if (!t.events.isNullOrEmpty()) {
+                    rv_list_team.adapter = LeagueMatchAdapter(t.events)
+                }
             })
         }
     }

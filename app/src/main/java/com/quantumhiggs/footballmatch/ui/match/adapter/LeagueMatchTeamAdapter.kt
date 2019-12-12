@@ -3,10 +3,12 @@ package com.quantumhiggs.footballmatch.ui.match.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.quantumhiggs.footballmatch.R
 import com.quantumhiggs.footballmatch.model.Team
+import com.quantumhiggs.footballmatch.ui.match.LeagueMatchFragmentDirections
 import com.quantumhiggs.footballmatch.utils.CommonFunction.checkNullOrEmpty
 import kotlinx.android.synthetic.main.item_list_team.view.*
 
@@ -35,6 +37,11 @@ class LeagueMatchTeamAdapter(private val team: List<Team>) :
                 .load(team.strTeamLogo)
                 .placeholder(R.drawable.ic_trophy)
                 .into(itemView.item_list_team_logo)
+
+            itemView.setOnClickListener {
+                val direction = LeagueMatchFragmentDirections.actionToDetailTeam(team.idTeam)
+                it.findNavController().navigate(direction)
+            }
         }
     }
 
