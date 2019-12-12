@@ -1,4 +1,4 @@
-package com.quantumhiggs.footballmatch.ui.match
+package com.quantumhiggs.footballmatch.ui.match.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.quantumhiggs.footballmatch.R
 import com.quantumhiggs.footballmatch.model.Event
+import com.quantumhiggs.footballmatch.ui.match.LeagueMatchFragmentDirections
 import com.quantumhiggs.footballmatch.utils.CommonFunction.checkNullOrEmpty
 import kotlinx.android.synthetic.main.item_list_match.view.*
 
@@ -38,7 +39,10 @@ class LeagueMatchAdapter(private val sports: List<Event>) :
                 checkNullOrEmpty(sport.intHomeScore) + " : " + checkNullOrEmpty(sport.intAwayScore)
 
             itemView.setOnClickListener {
-                val direction = LeagueMatchFragmentDirections.actionDetailMatch(sport.idEvent)
+                val direction =
+                    LeagueMatchFragmentDirections.actionDetailMatch(
+                        sport.idEvent
+                    )
                 it.findNavController().navigate(direction)
             }
 

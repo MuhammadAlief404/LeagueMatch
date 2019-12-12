@@ -3,6 +3,7 @@ package com.quantumhiggs.footballmatch.ui.match
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.quantumhiggs.footballmatch.model.Sports
+import com.quantumhiggs.footballmatch.model.Teams
 import com.quantumhiggs.footballmatch.network.NetworkConfig
 import retrofit2.Call
 import retrofit2.Callback
@@ -12,6 +13,7 @@ class LeagueMatchViewModel : ViewModel() {
 
     var listPrevMatch = MutableLiveData<Sports>()
     var listNextMatch = MutableLiveData<Sports>()
+    var listTeams = MutableLiveData<Teams>()
 
     companion object {
         var leaugeId: String = "4387"
@@ -20,6 +22,7 @@ class LeagueMatchViewModel : ViewModel() {
     init {
         getListPrevMatch(leaugeId)
         getListNextMatch(leaugeId)
+        getListTeams(leaugeId)
     }
 
     fun getListPrevMatch(leaugeId: String) {
@@ -39,16 +42,6 @@ class LeagueMatchViewModel : ViewModel() {
                     }
                 }
             })
-//        footballRepository.getListPrevMatch(leaugeId, object : FootballRepositoryCallback<Sports?> {
-//            override fun onDataLoaded(data: Sports?) {
-//                listPrevMatch.value = data
-//            }
-//
-//            override fun onDataError() {
-//                listPrevMatch.value = null
-//            }
-//
-//        })
     }
 
     fun getListNextMatch(leaugeId: String) {
@@ -68,21 +61,27 @@ class LeagueMatchViewModel : ViewModel() {
                     }
                 }
             })
-//        footballRepository.getListNextMatch(leaugeId, object : FootballRepositoryCallback<Sports?> {
-//            override fun onDataLoaded(data: Sports?) {
-//                listNextMatch.value = data
-//            }
-//
-//            override fun onDataError() {
-//                listNextMatch.value = null
-//            }
-//
-//        })
     }
 
+    fun getListTeams(leaugeId: String) {
+        NetworkConfig
+            .api()
+            .getListTeam(leaugeId)
+            .enqueue(object : Callback<Teams>{
+                override fun onFailure(call: Call<Teams>, t: Throwable) {
+                    listTeams.value = null
+                }
 
-    fun setLeagueID(id: String) {
-        leaugeId = id
+                override fun onResponse(call: Call<Teams>, response: Response<Teams>) {
+                    if(response.isSuccessful){
+                        listTeams.value = response.body()
+                    }
+                    else {
+                        listTeams.value = null
+                    }
+                }
+
+            })
     }
 
     fun setListNextMatch(): MutableLiveData<Sports> {
@@ -91,5 +90,9 @@ class LeagueMatchViewModel : ViewModel() {
 
     fun setListPrevMatch(): MutableLiveData<Sports> {
         return listPrevMatch
+    }
+
+    fun setListTeams() : MutableLiveData<Teams> {
+        return listTeams
     }
 }

@@ -18,4 +18,6 @@
     <string name="not_found_image">Not Found Image</string>
     <string name="match_added">Match Added to Favorite</string>
     <string name="match_removed">Match Removed from Favorite</string>
+    <string name="team_list">Team List</string>
+    <string name="logo_teams">Logo Teams</string>
 </resources>

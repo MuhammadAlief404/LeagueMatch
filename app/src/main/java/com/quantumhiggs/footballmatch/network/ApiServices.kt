@@ -1,8 +1,6 @@
 package com.quantumhiggs.footballmatch.network
 
-import com.quantumhiggs.footballmatch.model.Leagues
-import com.quantumhiggs.footballmatch.model.Sports
-import com.quantumhiggs.footballmatch.model.Teams
+import com.quantumhiggs.footballmatch.model.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -29,5 +27,23 @@ interface ApiServices {
 
     @GET("lookupteam.php?")
     fun getTeamDetail(@Query("id") id: String): Call<Teams>
+
+    @GET("lookup_all_teams.php?")
+    fun getListTeam(@Query("id") id: String): Call<Teams>
+
+    @GET("lookuptable.php?")
+    fun getClassement(@Query("id") id: String): Call<Classement>
+
+    @GET("lookupplayer.php?")
+    fun getPlayers(@Query("id") id: String): Call<Players>
+
+    @GET("eventsnext.php?")
+    fun getEventNextByTeam(@Query("id") id: String): Call<Sports>
+
+    @GET("eventslast.php?")
+    fun getEventPastByTeam(@Query("id") id: String): Call<Sports>
+
+    @GET("searchteams.php?")
+    fun getTeamByName(@Query("t") name: String): Call<Teams>
 
 }
