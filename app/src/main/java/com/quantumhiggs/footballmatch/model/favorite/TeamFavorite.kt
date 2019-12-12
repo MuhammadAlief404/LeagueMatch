@@ -1,7 +1,7 @@
 package com.quantumhiggs.footballmatch.model.favorite
 
 data class TeamFavorite(
-    val id: String?,
+    val id: Long?,
     val teamId: String?,
     val teamName: String?,
     val teamDesc: String?,

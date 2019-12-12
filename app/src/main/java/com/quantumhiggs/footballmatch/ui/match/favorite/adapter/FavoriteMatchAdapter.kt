@@ -1,4 +1,4 @@
-package com.quantumhiggs.footballmatch.ui.match.favorite
+package com.quantumhiggs.footballmatch.ui.match.favorite.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.quantumhiggs.footballmatch.R
 import com.quantumhiggs.footballmatch.model.favorite.MatchFavorite
+import com.quantumhiggs.footballmatch.ui.match.favorite.FavoriteMatchFragmentDirections
 import com.quantumhiggs.footballmatch.utils.CommonFunction.checkNullOrEmpty
 import kotlinx.android.synthetic.main.item_list_match.view.*
 
@@ -38,7 +39,9 @@ class FavoriteMatchAdapter(private val sports: List<MatchFavorite>) :
 
             itemView.setOnClickListener {
                 val direction =
-                    FavoriteMatchFragmentDirections.actionFavToDetailMatch(match.eventId.toString())
+                    FavoriteMatchFragmentDirections.actionFavToDetailMatch(
+                        match.eventId.toString()
+                    )
                 it.findNavController().navigate(direction)
             }
         }

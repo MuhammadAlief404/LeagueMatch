@@ -1,6 +1,7 @@
 package com.quantumhiggs.footballmatch.ui.team
 
 
+import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,13 +14,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.quantumhiggs.footballmatch.R
+import com.quantumhiggs.footballmatch.db.database
+import com.quantumhiggs.footballmatch.model.Team
+import com.quantumhiggs.footballmatch.model.favorite.TeamFavorite
 import com.quantumhiggs.footballmatch.ui.match.adapter.LeagueMatchAdapter
 import com.quantumhiggs.footballmatch.utils.CommonFunction.checkNullOrEmpty
 import kotlinx.android.synthetic.main.fragment_team_detail.*
+import org.jetbrains.anko.db.classParser
+import org.jetbrains.anko.db.delete
+import org.jetbrains.anko.db.insert
+import org.jetbrains.anko.db.select
+import org.jetbrains.anko.support.v4.toast
 
 class TeamDetailFragment : Fragment() {
 
     private lateinit var viewModel: TeamDetailViewModel
+    private var isFavorite = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,6 +89,10 @@ class TeamDetailFragment : Fragment() {
                     .load(t.teams[0].strTeamLogo)
                     .placeholder(R.drawable.ic_trophy)
                     .into(detail_team_logo)
+                detail_team_btn_add.setOnClickListener {
+                    favoriteControl(t.teams[0])
+                }
+                favoriteCheck(t.teams[0])
             })
             1 -> viewModel.prevMatch.observe(this, Observer { t ->
                 if (!t.results.isNullOrEmpty()) {
@@ -91,5 +105,76 @@ class TeamDetailFragment : Fragment() {
                 }
             })
         }
+    }
+
+    private fun favoriteControl(data: Team) {
+        favoriteCheck(data)
+        if (isFavorited(data)) {
+            removeFromFavorite(data)
+        } else {
+            addToFavorite(data)
+            detail_team_btn_add.text = getString(R.string.remove_from_favorite)
+        }
+    }
+
+    private fun addToFavorite(data: Team) {
+        try {
+            context?.database?.use {
+                insert(
+                    TeamFavorite.TABLE_TEAM,
+                    TeamFavorite.TEAM_ID to data.idTeam,
+                    TeamFavorite.TEAM_NAME to data.strTeam,
+                    TeamFavorite.TEAM_DESC to data.strDescriptionEN,
+                    TeamFavorite.TEAM_IMG to data.strTeamLogo,
+                    TeamFavorite.TEAM_LEAGUE to data.strLeague,
+                    TeamFavorite.TEAM_YEAR to data.intFormedYear
+                )
+                toast(getString(R.string.match_added))
+                favoriteCheck(data)
+            }
+        } catch (e: SQLiteConstraintException) {
+            toast(e.localizedMessage)
+        }
+    }
+
+    private fun removeFromFavorite(data: Team) {
+        try {
+            context?.database?.use {
+                delete(
+                    TeamFavorite.TABLE_TEAM, "(TEAM_ID = {id})",
+                    "id" to data.idTeam
+                )
+            }
+            toast(getString(R.string.match_removed))
+            favoriteCheck(data)
+        } catch (e: SQLiteConstraintException) {
+            toast(e.localizedMessage)
+        }
+    }
+
+    private fun favoriteCheck(data: Team) {
+        if (isFavorited(data)) {
+            detail_team_btn_add.text = getString(R.string.remove_from_favorite)
+            isFavorite = true
+        } else {
+            detail_team_btn_add.text = getString(R.string.add_to_favorite)
+            isFavorite = false
+        }
+    }
+
+    private fun isFavorited(data: Team): Boolean {
+        var temp = false
+        context?.database?.use {
+            val result = select(TeamFavorite.TABLE_TEAM)
+                .whereArgs(
+                    "(TEAM_ID = {id})",
+                    "id" to data.idTeam
+                )
+            val favorite = result.parseList(classParser<TeamFavorite>())
+            if (favorite.isNotEmpty()) {
+                temp = true
+            }
+        }
+        return temp
     }
 }

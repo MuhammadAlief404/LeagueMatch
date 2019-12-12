@@ -30,7 +30,6 @@ class StandingsAdapter(private val standings: List<Table>) :
 
         fun bindItems(standing: Table) {
             itemView.item_standings_title.text = checkNullOrEmpty(standing.name)
-            itemView.item_standing_played.text = checkNullOrEmpty(standing.played.toString())
             itemView.item_standings_win.text = checkNullOrEmpty(standing.win.toString())
             itemView.item_standings_draw.text = checkNullOrEmpty(standing.draw.toString())
             itemView.item_standings_loss.text = checkNullOrEmpty(standing.loss.toString())
